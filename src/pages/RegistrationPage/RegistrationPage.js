@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import api from "../../services/api";
 
 export default function RegistrationPage() {
-	const [registerForm, setResgisterForm] = useState({ email: "", password: "", username: "", pictureUrl: "" });
+	const [registerForm, setResgisterForm] = useState({ email: "", password: "", username: "", picture_url: "" });
 	const [disabled, setDisabled] = useState(false);
 	const navigate = useNavigate();
 	const loader = <ThreeDots type="Puff" color="#FFFFFF" height={23} width={46} timeout={2000} />;
@@ -69,7 +69,7 @@ export default function RegistrationPage() {
 
 						<input required disabled={disabled} name="username" value={registerForm.username} type="text" placeholder="Username" onChange={changeFormData} />
 
-						<input required disabled={disabled} name="pictureUrl" value={registerForm.pictureUrl} type="url" placeholder="Picture URL" onChange={changeFormData} />
+						<input required disabled={disabled} name="picture_url" value={registerForm.picture_url} type="url" placeholder="Picture URL" onChange={changeFormData} />
 
 						<ButtonItem disabled={disabled} type="submit">
 							{disabled ? loader : "Sign Up"}
