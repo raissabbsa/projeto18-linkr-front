@@ -33,16 +33,29 @@ export default function RegistrationPage() {
 				navigate("/");
 			})
 			.catch((err) => {
-				toast.error("Erro ao cadastrar, tente novamente!", {
-					position: "top-center",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: "dark",
-				});
+				if(err.response.status === 409) {
+					toast.error("Email ou usuário já cadastrado!", {
+						position: "top-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "dark",
+					});
+				} else {
+					toast.error("Erro ao cadastrar, tente novamente!", {
+						position: "top-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "dark",
+					});
+				}
 				setDisabled(false);
 			});
 	}
