@@ -1,15 +1,18 @@
 import styled from "styled-components";
+import NavBar from "../../components/Navbar/NavBar";
 import Publishing from "./Publishing";
 
 export default function TimelinePage() {
 	return (
-    <TimelineContainer>
-      <>
-        <h1>timeline</h1>
-        <Publishing />
-
-      </>
-    </TimelineContainer>
+    <>
+      <NavBar/>
+      <TimelineContainer>
+        <>
+          <h1>timeline</h1>
+          <Publishing />
+        </>
+      </TimelineContainer>
+    </>
   );
 }
 const TimelineContainer = styled.div`

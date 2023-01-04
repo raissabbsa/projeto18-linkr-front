@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../providers/UserData";
 import api from "../../services/api";
 import { ThreeDots } from "react-loader-spinner";
@@ -54,11 +54,15 @@ export default function LoginPage() {
 		setLoginForm({ ...loginForm, [name]: value });
 	}
 
+	function goToSignUp() {
+		navigate("/sign-up");
+	}
+
 	return (
 		<LoginPageScreen>
 			<LoginPageTitle>
 				<TitleContainer>
-					<h1>Linkr</h1>
+					<h1>linkr</h1>
 					<p>save, share and discover the best links on the web</p>
 				</TitleContainer>
 			</LoginPageTitle>
@@ -73,7 +77,9 @@ export default function LoginPage() {
 							{disabled ? loader : "Log In"}
 						</ButtonItem>
 					</Form>
-					<LinkText to={"/sign-up"}>First time? Create an account!</LinkText>
+					<button disabled={disabled} onClick={goToSignUp}>
+						First time? Create an account!
+					</button>
 				</FormContainer>
 			</LoginPageContainer>
 		</LoginPageScreen>
@@ -133,6 +139,15 @@ const FormContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
+	> button {
+		border: none;
+		background-color: transparent;
+		font-size: 20px;
+		line-height: 24px;
+		color: #ffffff;
+		text-decoration: underline;
+		cursor: pointer;
+	}
 `;
 
 const Form = styled.form`
@@ -155,6 +170,7 @@ const Form = styled.form`
 
 const ButtonItem = styled.button`
 	width: 100%;
+	height: 64px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -169,10 +185,4 @@ const ButtonItem = styled.button`
 	color: #ffffff;
 	background-color: #1877f2;
 	cursor: pointer;
-`;
-
-const LinkText = styled(Link)`
-	font-size: 20px;
-	line-height: 24px;
-	color: #ffffff;
 `;

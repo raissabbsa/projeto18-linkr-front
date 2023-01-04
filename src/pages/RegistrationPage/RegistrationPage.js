@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
@@ -33,7 +33,7 @@ export default function RegistrationPage() {
 				navigate("/");
 			})
 			.catch((err) => {
-				if(err.response.status === 409) {
+				if (err.response.status === 409) {
 					toast.error("Email ou usuário já cadastrado!", {
 						position: "top-center",
 						autoClose: 3000,
@@ -65,11 +65,15 @@ export default function RegistrationPage() {
 		setResgisterForm({ ...registerForm, [name]: value });
 	}
 
+	function goToSignUp() {
+		navigate("/");
+	}
+
 	return (
 		<RegistrationPageScreen>
 			<RegistrationPageTitle>
 				<TitleContainer>
-					<h1>Linkr</h1>
+					<h1>linkr</h1>
 					<p>save, share and discover the best links on the web</p>
 				</TitleContainer>
 			</RegistrationPageTitle>
@@ -88,7 +92,9 @@ export default function RegistrationPage() {
 							{disabled ? loader : "Sign Up"}
 						</ButtonItem>
 					</Form>
-					<LinkText to={"/"}>Switch back to log in</LinkText>
+					<button disabled={disabled} onClick={goToSignUp}>
+						First time? Create an account!
+					</button>
 				</FormContainer>
 			</RegistrationPageContainer>
 		</RegistrationPageScreen>
@@ -148,6 +154,15 @@ const FormContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
+	> button {
+		border: none;
+		background-color: transparent;
+		font-size: 20px;
+		line-height: 24px;
+		color: #ffffff;
+		text-decoration: underline;
+		cursor: pointer;
+	}
 `;
 
 const Form = styled.form`
@@ -170,6 +185,7 @@ const Form = styled.form`
 
 const ButtonItem = styled.button`
 	width: 100%;
+	height: 64px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -184,10 +200,4 @@ const ButtonItem = styled.button`
 	color: #ffffff;
 	background-color: #1877f2;
 	cursor: pointer;
-`;
-
-const LinkText = styled(Link)`
-	font-size: 20px;
-	line-height: 24px;
-	color: #ffffff;
 `;
