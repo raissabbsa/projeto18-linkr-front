@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
@@ -73,7 +73,7 @@ export default function RegistrationPage() {
 		<RegistrationPageScreen>
 			<RegistrationPageTitle>
 				<TitleContainer>
-					<h1>Linkr</h1>
+					<h1>linkr</h1>
 					<p>save, share and discover the best links on the web</p>
 				</TitleContainer>
 			</RegistrationPageTitle>
@@ -185,6 +185,7 @@ const Form = styled.form`
 
 const ButtonItem = styled.button`
 	width: 100%;
+	height: 64px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

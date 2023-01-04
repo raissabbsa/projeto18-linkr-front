@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../providers/UserData";
 import api from "../../services/api";
 import { ThreeDots } from "react-loader-spinner";
@@ -62,7 +62,7 @@ export default function LoginPage() {
 		<LoginPageScreen>
 			<LoginPageTitle>
 				<TitleContainer>
-					<h1>Linkr</h1>
+					<h1>linkr</h1>
 					<p>save, share and discover the best links on the web</p>
 				</TitleContainer>
 			</LoginPageTitle>
@@ -170,6 +170,7 @@ const Form = styled.form`
 
 const ButtonItem = styled.button`
 	width: 100%;
+	height: 64px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
