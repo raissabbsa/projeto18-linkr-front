@@ -2,28 +2,43 @@ import axios from "axios";
 import { useState } from "react"
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/urls";
-import { UserContext } from "../../providers/UserData";
+
+function Hashtags(prop) {
+    return (
+        <h2># {prop.hashtag}</h2>
+    );
+}
 
 export default function Sidebar(){
+    const [hashtags, setHashtags] = useState(["aqui", "sao", "todas", "as", "hashtags", "do", "banco"]); //null
+
+/*     const promise = axios.get(`${BASE_URL}/trending`);
+    promise.then(res => {
+        setHashtags(res.data);
+    }).catch(err => {
+        console.log(err.res.data);
+    }) 
+*/
+    if(hashtags === null) {
+        return(
+            <TrendingContainer display={`none`}></TrendingContainer>
+        )
+	}
+
     return(
-        <TrendingContainer>
+        <TrendingContainer display={`flex`}>
             <h1>trending</h1>   
-            <div></div> 
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026</h2>
-            <h2># brasilcopa2026brasilcopa2026brasilcopa2026copa2026</h2>
-            {/* aqui vai ser feito um map com o array de hashtags que vai vir lá do back */}
+            <div></div>
+            {hashtags.map((value) => ( 
+                <Hashtags hashtag={value} /> 
+            ))}
         </TrendingContainer>
     )
 }
 
 const TrendingContainer = styled.div`
     background-color: #171717;
-    display: flex;
+    display: ${props => props.display};
     flex-direction: column;
     align-items: flex-start;
     min-width: 301px;

@@ -31,26 +31,19 @@ export default function Publishing(){
             setLoading(false);
         });
 
+        hashtags = ["gelatto", "italy", "vegan"];
         if(hashtags.length > 0){
-            //enviar a lista de hashtags para o banco de dados
             publishHashtags(hashtags);
-            //eu tirei do then pq to achando que vai ficar muito promise hell, mas tá estranho AFF
-            //porque tem que fazer um post também para enviar o array para o back... HELP.
         }
     }
 
     function publishHashtags(array){
-            /* 
-            const hashtagsObject = {
-                hashtags_post: array
-            }
-            const promise = axios.post(`${BASE_URL}/hashtags`, hashtagsObject); 
+            const promise = axios.post(`${BASE_URL}/trending`, array); 
             promise.then(res => {
                 console.log("ok");
             }).catch(err => {
                 console.log(err);
             });
-            */
     }
 
     function verifyHashtag(text){
