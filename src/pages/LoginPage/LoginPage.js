@@ -54,6 +54,10 @@ export default function LoginPage() {
 		setLoginForm({ ...loginForm, [name]: value });
 	}
 
+	function goToSignUp() {
+		navigate("/sign-up");
+	}
+
 	return (
 		<LoginPageScreen>
 			<LoginPageTitle>
@@ -73,7 +77,9 @@ export default function LoginPage() {
 							{disabled ? loader : "Log In"}
 						</ButtonItem>
 					</Form>
-					<LinkText to={"/sign-up"}>First time? Create an account!</LinkText>
+					<button disabled={disabled} onClick={goToSignUp}>
+						First time? Create an account!
+					</button>
 				</FormContainer>
 			</LoginPageContainer>
 		</LoginPageScreen>
@@ -133,6 +139,15 @@ const FormContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 20px;
+	> button {
+		border: none;
+		background-color: transparent;
+		font-size: 20px;
+		line-height: 24px;
+		color: #ffffff;
+		text-decoration: underline;
+		cursor: pointer;
+	}
 `;
 
 const Form = styled.form`
@@ -169,10 +184,4 @@ const ButtonItem = styled.button`
 	color: #ffffff;
 	background-color: #1877f2;
 	cursor: pointer;
-`;
-
-const LinkText = styled(Link)`
-	font-size: 20px;
-	line-height: 24px;
-	color: #ffffff;
 `;
