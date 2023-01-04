@@ -17,15 +17,13 @@ export default function Publishing(){
         setLoading(true);
 
         let hashtags = verifyHashtag(form.description);
+        
         const config = { headers: { Authorization: `Bearer ${userData.token}` } };
         const promise = axios.post(`${BASE_URL}/posts`, form, config);
         promise.then(res => {
             setForm({link: "", description: ""});
             setLoading(false);
             //atualizar lista de posts
-            if(hashtags.length > 0){
-                //enviar a lista de hashtags para o banco de dados
-            }
         });
         promise.catch((err) => {
             console.log(err);
@@ -33,7 +31,28 @@ export default function Publishing(){
             setLoading(false);
         });
 
+        if(hashtags.length > 0){
+            //enviar a lista de hashtags para o banco de dados
+            publishHashtags(hashtags);
+            //eu tirei do then pq to achando que vai ficar muito promise hell, mas tá estranho AFF
+            //porque tem que fazer um post também para enviar o array para o back... HELP.
+        }
     }
+
+    function publishHashtags(array){
+            /* 
+            const hashtagsObject = {
+                hashtags_post: array
+            }
+            const promise = axios.post(`${BASE_URL}/hashtags`, hashtagsObject); 
+            promise.then(res => {
+                console.log("ok");
+            }).catch(err => {
+                console.log(err);
+            });
+            */
+    }
+
     function verifyHashtag(text){
         let array = text.split(" ");
         let hashtags = [];
