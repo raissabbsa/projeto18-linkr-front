@@ -20,13 +20,14 @@ export default function NavBar() {
 		<NavContainer>
 			<StyledLink to="/timeline">linkr</StyledLink>
 			<UserOptionsContainer userOptions={userOptions}>
-				<FaChevronDown onClick={() => setUserOptions(!userOptions)} />
-				<img src={userData.picture_url} alt="Usuário" />
+				<FaChevronDown onClick={() => setUserOptions(!userOptions)}/>
+				<img src={userData.picture_url} alt="Usuário" onClick={() => setUserOptions(!userOptions)}/>
 				<LogoutContainer userOptions={userOptions}>
 					<span>Olá {userData.username}!</span>
 					<button onClick={handleLogout}>LogOut</button>
 				</LogoutContainer>
 			</UserOptionsContainer>
+			<CloseMenuContainer userOptions={userOptions} onClick={() => setUserOptions(false)}/>
 		</NavContainer>
 	);
 }
@@ -35,7 +36,7 @@ const NavContainer = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 2;
+	z-index: 3;
 	width: 100%;
 	height: 80px;
 	background: #151515;
@@ -73,9 +74,20 @@ const UserOptionsContainer = styled.div`
 	}
 `;
 
-const LogoutContainer = styled.div`
+const CloseMenuContainer = styled.div`
 	position: fixed;
 	z-index: -1;
+	right: 0px;
+	top: 80px;
+	background-color: transparent;
+	width: 100%;
+	height: 100%;
+	display: ${(props) => (props.userOptions ? "" : "none")};
+`
+
+const LogoutContainer = styled.div`
+	position: fixed;
+	z-index: 0;
 	right: 0px;
 	top: ${(props) => (props.userOptions ? "70px" : "-130px")};
 	width: 150px;
