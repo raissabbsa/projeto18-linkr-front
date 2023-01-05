@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/urls";
 
@@ -12,14 +12,14 @@ function Hashtags(prop) {
 export default function Sidebar(){
     const [hashtags, setHashtags] = useState([]);
 
-    const promise = axios.get(`${BASE_URL}/trending`);
-    promise.then(res => {
-        if(res.data !== undefined)
+    useEffect(() => {
+        const promise = axios.get(`${BASE_URL}/trending`);
+        promise.then(res => {
             setHashtags(res.data);
-    }).catch(err => {
-        if(err.data !== undefined)
-            console.log(err.data);
-    }) 
+        }).catch(err => {
+            console.log(err.res.data);
+        }); 
+    })
 
     if(hashtags.length === 0) {
         return(
