@@ -2,15 +2,17 @@ import styled from "styled-components";
 import NavBar from "../../components/Navbar/NavBar";
 import Publishing from "./Publishing";
 import Posts from "./Posts";
+import { useState } from "react";
 
 export default function TimelinePage() {
+  const [update, setUpdate] = useState(0);
   return (
     <>
       <NavBar />
       <TimelineContainer>
         <h1>timeline</h1>
-        <Publishing />
-        <Posts />
+        <Publishing setUpdate = {setUpdate} update = {update}/>
+        <Posts update = {update}/>
       </TimelineContainer>
     </>
   );
