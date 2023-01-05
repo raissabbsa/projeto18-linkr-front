@@ -24,7 +24,7 @@ export default function NavBar() {
 				<img src={userData.picture_url} alt="Usuário" onClick={() => setUserOptions(!userOptions)}/>
 				<LogoutContainer userOptions={userOptions}>
 					<span>Olá {userData.username}!</span>
-					<button onClick={handleLogout}>LogOut</button>
+						<button onClick={handleLogout}>LogOut</button>
 				</LogoutContainer>
 			</UserOptionsContainer>
 			<CloseMenuContainer userOptions={userOptions} onClick={() => setUserOptions(false)}/>
@@ -71,7 +71,7 @@ const UserOptionsContainer = styled.div`
 		font-size: 28px;
 		transition: transform 0.5s;
 		transform: ${(props) => (props.userOptions ? "rotate(180deg)" : "rotate(0deg)")};
-	}
+		}
 `;
 
 const CloseMenuContainer = styled.div`

@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import NavBar from "../../components/Navbar/NavBar";
 import Publishing from "./Publishing";
+import Posts from "./Posts";
 
 export default function TimelinePage() {
-	return (
+  return (
     <>
-      <NavBar/>
+      <NavBar />
       <TimelineContainer>
-        <>
-          <h1>timeline</h1>
-          <Publishing />
-        </>
+        <h1>timeline</h1>
+        <Publishing />
+        <Posts />
       </TimelineContainer>
     </>
   );
@@ -21,10 +21,10 @@ const TimelineContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
-  &>h1{
+  & > h1 {
     font-size: 43px;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-bottom: 43px;
   }
-`
+`;

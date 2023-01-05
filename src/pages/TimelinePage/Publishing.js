@@ -42,6 +42,7 @@ export default function Publishing(){
             if(item[0] === "#"){
                 hashtags.push(item);
             }
+            return "";
         });
         return hashtags;
     }
@@ -81,7 +82,7 @@ const PublishContainer = styled.div`
     width: 611px;
     padding: 20px;
     display: flex;
-
+    margin-bottom: 29px;
     img{
         width: 50px;
         height: 50px;
@@ -113,6 +114,10 @@ const Form = styled.form`
         padding: 10px;
         font-size: 14px;
     }
+    input:nth-child(2){
+        height: 60px;
+    }
+
     button{
         width: 100px;
         height: 35px;
