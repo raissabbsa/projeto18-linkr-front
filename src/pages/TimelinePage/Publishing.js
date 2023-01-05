@@ -31,16 +31,17 @@ export default function Publishing(){
             setLoading(false);
         });
 
-        hashtags = ["gelatto", "italy", "vegan"];
         if(hashtags.length > 0){
             publishHashtags(hashtags);
         }
     }
 
+    //let hashtags = ["gelatto", "italy", "vegan"];
+    //publishHashtags(hashtags);
     function publishHashtags(array){
             const promise = axios.post(`${BASE_URL}/trending`, array); 
             promise.then(res => {
-                console.log("ok");
+                console.log("okay");
             }).catch(err => {
                 console.log(err);
             });

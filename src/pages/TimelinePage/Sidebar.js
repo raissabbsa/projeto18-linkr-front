@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react"
+import { useState } from "react";
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/urls";
 
@@ -10,16 +10,18 @@ function Hashtags(prop) {
 }
 
 export default function Sidebar(){
-    const [hashtags, setHashtags] = useState(["aqui", "sao", "todas", "as", "hashtags", "do", "banco"]); //null
+    const [hashtags, setHashtags] = useState([]);
 
-/*     const promise = axios.get(`${BASE_URL}/trending`);
+    const promise = axios.get(`${BASE_URL}/trending`);
     promise.then(res => {
-        setHashtags(res.data);
+        if(res.data !== undefined)
+            setHashtags(res.data);
     }).catch(err => {
-        console.log(err.res.data);
+        if(err.data !== undefined)
+            console.log(err.data);
     }) 
-*/
-    if(hashtags === null) {
+
+    if(hashtags.length === 0) {
         return(
             <TrendingContainer display={`none`}></TrendingContainer>
         )
@@ -29,8 +31,8 @@ export default function Sidebar(){
         <TrendingContainer display={`flex`}>
             <h1>trending</h1>   
             <div></div>
-            {hashtags.map((value) => ( 
-                <Hashtags hashtag={value} /> 
+            {hashtags.map((value, i) => ( 
+                <Hashtags hashtag={value} key={i} /> 
             ))}
         </TrendingContainer>
     )
