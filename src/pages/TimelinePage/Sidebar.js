@@ -19,7 +19,7 @@ export default function Sidebar(){
         }).catch(err => {
             console.log(err.res.data);
         }); 
-    })
+    }, []);
 
     if(hashtags.length === 0) {
         return(

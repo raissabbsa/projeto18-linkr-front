@@ -1,9 +1,22 @@
 import styled from "styled-components";
 import { FaHeart } from "react-icons/fa";
+import { ReactTagify } from "react-tagify";
 
 export function SinglePost(post) {
   const { picture_user, username, description, likes } = post;
-  
+  const  tagStyle  =  { 
+    color: 'white' , 
+    fontWeight: 700 , 
+    cursor: 'pointer',
+    fontSize: 20
+  };
+  const  mentionStyle  =  { 
+    color: 'gray' , 
+    fontWeight: 400 , 
+    fontSize: 20,
+    cursor: 'pointer',
+  }
+
   return (
     <PostContainer>
       <Column>
@@ -13,7 +26,12 @@ export function SinglePost(post) {
       </Column>
       <Content>
         <h1>{username}</h1>
-        <p>{description}</p>
+        < ReactTagify 
+            tagStyle = { tagStyle } 
+            mentionStyle = { mentionStyle } 
+            tagClicked = {(tag) =>  alert(tag)} >
+            <p>{`${description}`}</p>
+        </ReactTagify > 
       </Content>
     </PostContainer>
   );
@@ -60,10 +78,12 @@ const Content = styled.div`
     font-size: 23px;
     margin-bottom: 5px;
   }
-
-  & > p {
-    color: #a3a3a3;
+  p {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
     font-size: 20px;
-    margin-bottom: 15px;
+    line-height: 20px;
+    color: #B7B7B7;
   }
 `;
