@@ -15,8 +15,8 @@ export default function Posts({update}){
         const config = { headers: { Authorization: `Bearer ${userData.token}` } };
         const promise = axios.get(`${BASE_URL}/posts`, config);
         promise.then(res => {
-            setPosts(res.data);
             setFinished(true);
+            setPosts(res.data);
         });
         promise.catch(err => {
             alert("An error occured while trying to fetch the posts, please refresh the page");

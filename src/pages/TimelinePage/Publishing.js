@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { BASE_URL } from "../../constants/urls";
 import { UserContext } from "../../providers/UserData";
 
-export default function Publishing({setUpdate, update}) {
+export default function Publishing({ setUpdate, update }) {
   const [form, setForm] = useState({ link: "", description: "" });
   const [loading, setLoading] = useState(false);
   const { userData } = useContext(UserContext);
@@ -17,35 +17,52 @@ export default function Publishing({setUpdate, update}) {
     setLoading(true);
 
     let hashtags = verifyHashtag(form.description);
+
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
     const promise = axios.post(`${BASE_URL}/posts`, form, config);
     promise.then((res) => {
       setForm({ link: "", description: "" });
       setLoading(false);
       setUpdate(update + 1);
+
       //atualizar lista de posts
-      if (hashtags.length > 0) {
-        //enviar a lista de hashtags para o banco de dados
-      }
     });
     promise.catch((err) => {
       console.log(err);
       alert("Houve um erro ao publicar seu link");
       setLoading(false);
     });
+
+    if (hashtags.length > 0) {
+      publishHashtags(hashtags);
+      console.log(hashtags);
+    }
   }
+
+  //let hashtags = ["gelatto", "italy", "vegan"];
+  //publishHashtags(hashtags);
+  function publishHashtags(array) {
+    const promise = axios.post(`${BASE_URL}/trending`, array);
+    promise
+      .then((res) => {
+        console.log("okay");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function verifyHashtag(text) {
     let array = text.split(" ");
     let hashtags = [];
     array.map((item) => {
       if (item[0] === "#") {
-        hashtags.push(item);
+        hashtags.push(item.substr(1));
       }
       return "";
     });
     return hashtags;
   }
-  
   return (
     <PublishContainer>
       <img src={userData.picture_url} alt="img" />

@@ -7,7 +7,6 @@ export function SinglePost(post) {
   const { picture_user, username, description, likes, user_id } = post;
   const { userData } = useContext(UserContext);
 
-
   if (userData.id === user_id) {
     return (
       <PostContainer>
