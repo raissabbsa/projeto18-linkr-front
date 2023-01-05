@@ -3,16 +3,18 @@ import NavBar from "../../components/Navbar/NavBar";
 import Publishing from "./Publishing";
 import Sidebar from "./Sidebar";
 import Posts from "./Posts";
+import { useState } from "react";
 
 export default function TimelinePage() {
+  const [update, setUpdate] = useState(0);
   return (
     <>
       <NavBar/>
       <BodyContent>
         <TimelineContainer>
             <h1>timeline</h1>
-            <Publishing />
-            <Posts />
+            <Publishing setUpdate = {setUpdate} update = {update}/>
+            <Posts update = {update}/>
         </TimelineContainer>
         <Sidebar />
       </BodyContent>  
@@ -33,7 +35,7 @@ const TimelineContainer = styled.div`
     color: #FFFFFF;
     margin-bottom: 43px;
   }
-`
+  `
 const BodyContent = styled.div`
   display: flex;
   align-items: flex-start;

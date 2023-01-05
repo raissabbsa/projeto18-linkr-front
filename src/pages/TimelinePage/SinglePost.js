@@ -1,22 +1,47 @@
 import styled from "styled-components";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { UserContext } from "../../providers/UserData";
+import React, { useContext, useState } from "react";
 
 export function SinglePost(post) {
-  const { picture_user, username, description, likes } = post;
-  
-  return (
-    <PostContainer>
-      <Column>
-        <img src={picture_user} alt="img" />
-        <FaHeart />
-        <p>{likes} likes</p>
-      </Column>
-      <Content>
-        <h1>{username}</h1>
-        <p>{description}</p>
-      </Content>
-    </PostContainer>
-  );
+  const { picture_user, username, description, likes, user_id } = post;
+  const { userData } = useContext(UserContext);
+
+  if (userData.id === user_id) {
+    return (
+      <PostContainer>
+        <Column>
+          <img src={picture_user} alt="img" />
+          <FaHeart />
+          <p>{likes} likes</p>
+        </Column>
+        <Content>
+          <Top>
+            <h1>{username}</h1>
+            <div>
+              <FaPencilAlt/>
+              <FaTrash />
+            </div>
+          </Top>
+          <p>{description}</p>
+        </Content>
+      </PostContainer>
+    );
+  } else {
+    return (
+      <PostContainer>
+        <Column>
+          <img src={picture_user} alt="img" />
+          <FaHeart />
+          <p>{likes} likes</p>
+        </Column>
+        <Content>
+          <h1>{username}</h1>
+          <p>{description}</p>
+        </Content>
+      </PostContainer>
+    );
+  }
 }
 
 const PostContainer = styled.div`
@@ -24,7 +49,7 @@ const PostContainer = styled.div`
   display: flex;
   width: 611px;
   height: 276px;
-  padding: 25px;
+  padding: 28px;
   background-color: #171717;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -50,20 +75,36 @@ const Column = styled.div`
   }
   p {
     color: white;
-    font-size: 12px;
+    font-size: 11px;
   }
 `;
 const Content = styled.div`
   margin-left: 20px;
+  & > p {
+    color: #b7b7b7;
+    font-size: 17px;
+    margin-bottom: 15px;
+  }
   & > h1 {
     color: white;
-    font-size: 23px;
-    margin-bottom: 5px;
+    font-size: 19px;
+    margin-bottom: 7px;
+  }
+`;
+
+const Top = styled.div`
+  display: flex;
+  width: 470px;
+  justify-content: space-between;
+  & > h1 {
+    color: white;
+    font-size: 19px;
+    margin-bottom: 7px;
   }
 
-  & > p {
-    color: #a3a3a3;
-    font-size: 20px;
-    margin-bottom: 15px;
+  svg {
+    margin-left: 5px;
+    color: white;
+    font-size: 14px;
   }
 `;
