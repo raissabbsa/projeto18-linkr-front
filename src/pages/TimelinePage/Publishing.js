@@ -17,15 +17,13 @@ export default function Publishing(){
         setLoading(true);
 
         let hashtags = verifyHashtag(form.description);
+        
         const config = { headers: { Authorization: `Bearer ${userData.token}` } };
         const promise = axios.post(`${BASE_URL}/posts`, form, config);
         promise.then(res => {
             setForm({link: "", description: ""});
             setLoading(false);
             //atualizar lista de posts
-            if(hashtags.length > 0){
-                //enviar a lista de hashtags para o banco de dados
-            }
         });
         promise.catch((err) => {
             console.log(err);
@@ -33,14 +31,29 @@ export default function Publishing(){
             setLoading(false);
         });
 
+        if(hashtags.length > 0){
+            publishHashtags(hashtags);
+            console.log(hashtags);
+        }
     }
+
+    //let hashtags = ["gelatto", "italy", "vegan"];
+    //publishHashtags(hashtags);
+    function publishHashtags(array){
+            const promise = axios.post(`${BASE_URL}/trending`, array); 
+            promise.then(res => {
+                console.log("okay");
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+
     function verifyHashtag(text){
         let array = text.split(" ");
         let hashtags = [];
         array.map(item => {
-            console.log(item[0])
             if(item[0] === "#"){
-                hashtags.push(item);
+                hashtags.push(item.substr(1));
             }
             return "";
         });
