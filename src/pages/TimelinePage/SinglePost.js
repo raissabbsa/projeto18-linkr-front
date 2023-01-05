@@ -1,47 +1,42 @@
 import styled from "styled-components";
 import { FaHeart, FaPencilAlt, FaTrash } from "react-icons/fa";
 import { UserContext } from "../../providers/UserData";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
-export function SinglePost(post) {
+export function SinglePost({post}) {
   const { picture_user, username, description, likes, user_id } = post;
   const { userData } = useContext(UserContext);
 
-  if (userData.id === user_id) {
-    return (
-      <PostContainer>
-        <Column>
-          <img src={picture_user} alt="img" />
-          <FaHeart />
-          <p>{likes} likes</p>
-        </Column>
-        <Content>
-          <Top>
+  function handlePost(){
+    if (userData.id === user_id) {
+      return(
+        <Top>
             <h1>{username}</h1>
             <div>
               <FaPencilAlt/>
               <FaTrash />
             </div>
           </Top>
-          <p>{description}</p>
-        </Content>
-      </PostContainer>
-    );
-  } else {
-    return (
-      <PostContainer>
+      )
+    }
+    else{
+      return(<h1>{username}</h1>);
+    }
+  }
+
+  return(
+    <PostContainer>
         <Column>
           <img src={picture_user} alt="img" />
           <FaHeart />
           <p>{likes} likes</p>
         </Column>
         <Content>
-          <h1>{username}</h1>
+          {handlePost()}
           <p>{description}</p>
         </Content>
       </PostContainer>
-    );
-  }
+  );
 }
 
 const PostContainer = styled.div`
