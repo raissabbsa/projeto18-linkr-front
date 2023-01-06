@@ -1,23 +1,21 @@
+import styled from "styled-components";
 import NavBar from "../../components/Navbar/NavBar";
-import Publishing from "./Publishing";
 import Sidebar from "./Sidebar";
 import Posts from "./Posts";
 import { BodyContent, TimelineContainer } from "../../assets/style/TimelineStyle.js";
-import { useState } from "react";
 
-export default function TimelinePage() {
-  const [update, setUpdate] = useState(0);
-  return (
+export default function HashtagPage() {
+
+    return(
     <>
       <NavBar/>
       <BodyContent>
         <TimelineContainer>
-            <h1>timeline</h1>
-            <Publishing setUpdate = {setUpdate} update = {update}/>
-            <Posts update = {update}/>
+            <h1># </h1>
+            <Posts />
         </TimelineContainer>
         <Sidebar />
       </BodyContent>  
     </>
-  );
+    );
 }

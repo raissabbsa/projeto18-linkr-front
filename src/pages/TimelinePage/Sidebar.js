@@ -19,12 +19,12 @@ export default function Sidebar(){
         }).catch(err => {
             console.log(err.res.data);
         }); 
-    })
+    }, []);
 
     if(hashtags.length === 0) {
         return(
             <TrendingContainer display={`none`}></TrendingContainer>
-        )
+        );
 	}
 
     return(
@@ -35,7 +35,8 @@ export default function Sidebar(){
                 <Hashtags hashtag={value} key={i} /> 
             ))}
         </TrendingContainer>
-    )
+    );
+
 }
 
 const TrendingContainer = styled.div`
