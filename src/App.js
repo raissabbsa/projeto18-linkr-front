@@ -5,7 +5,6 @@ import GlobalStyle from "./assets/style/GlobalStyle";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import TimelinePage from "./pages/TimelinePage/TimelinePage";
-import NavBar from "./components/Navbar/NavBar";
 import HashtagPage from "./pages/TimelinePage/HashtagPage";
 
 export default function App(){
