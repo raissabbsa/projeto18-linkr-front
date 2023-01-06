@@ -14,7 +14,7 @@ export default function TimelinePage() {
         <TimelineContainer>
             <h1>timeline</h1>
             <Publishing setUpdate = {setUpdate} update = {update}/>
-            <Posts update = {update}/>
+            <Posts update = {update} setUpdate = {setUpdate}/>
         </TimelineContainer>
         <Sidebar />
       </BodyContent>  
