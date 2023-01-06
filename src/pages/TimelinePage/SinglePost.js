@@ -2,7 +2,31 @@ import styled from "styled-components";
 import { FaHeart } from "react-icons/fa";
 import { ReactTagify } from "react-tagify";
 
+function GoToHashtagPage(tag){
+  //const navigate = useNavigate(); 
+  const tagParams = tag.substring(1);
+  console.log(tagParams);
+  return tagParams; //navigate(`/hashtag/${tagParams}`);
+}
+/* 
+Uncaught Error: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://reactjs.org/link/invalid-hook-call for tips about how to debug and fix this problem. 
+*/
+/* 
+React Hook "useGoToHashtagPage" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function  react-hooks/rules-of-hooks 
+*/
+//serve de nada isso. do componente fora. dá no mesmo.
+
+
 export function SinglePost(post) {
+  //const navigate = useNavigate(); 
+  //Warning: React has detected a change in the order of Hooks called by Posts.
+  //Não vai aceitar o useNavigate em nenhum lugar aqui por causa disso... não sei o que fazernflifs.
+  //Uncaught Error: Rendered more hooks than during the previous render.
+
   const { picture_user, username, description, likes } = post;
   const  tagStyle  =  { 
     color: 'white' , 
@@ -29,7 +53,8 @@ export function SinglePost(post) {
         < ReactTagify 
             tagStyle = { tagStyle } 
             mentionStyle = { mentionStyle } 
-            tagClicked = {(tag) =>  alert(tag)} >
+            tagClicked = /* { (tag) => navigate(`/hashtag/${tag.substring(1)}`) }  */
+                        { (tag) => GoToHashtagPage(tag) } >
             <p>{`${description}`}</p>
         </ReactTagify > 
       </Content>

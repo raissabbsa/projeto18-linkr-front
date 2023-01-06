@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import TimelinePage from "./pages/TimelinePage/TimelinePage";
 import NavBar from "./components/Navbar/NavBar";
+import HashtagPage from "./pages/TimelinePage/HashtagPage";
 
 export default function App(){
   return(
@@ -16,6 +17,7 @@ export default function App(){
           <Route path="/" element={<LoginPage />} />
           <Route path="/sign-up" element={<RegistrationPage />} />
           <Route path="/timeline" element={<TimelinePage />} />
+          <Route path="/hashtag/:hashtag" element={<HashtagPage />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
