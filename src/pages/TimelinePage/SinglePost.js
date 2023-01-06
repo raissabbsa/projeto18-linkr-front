@@ -8,6 +8,10 @@ export function SinglePost({ post }) {
 	const { picture_user, username, description, likes, user_id, link, link_title, link_description, link_image } = post;
 	const { userData } = useContext(UserContext);
 
+  function deletePost() {
+    alert("deletar post");
+  }
+
 	function handlePost() {
 		if (userData.id === user_id) {
 			return (
@@ -15,7 +19,7 @@ export function SinglePost({ post }) {
 					<h1>{username}</h1>
 					<div>
 						<FaPencilAlt />
-						<FaTrash />
+						<FaTrash onClick={deletePost}/>
 					</div>
 				</Top>
 			);
@@ -82,6 +86,7 @@ const Column = styled.div`
 `;
 
 const Content = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -91,7 +96,7 @@ const Content = styled.div`
 		font-size: 17px;
 		margin-bottom: 15px;
 	}
-	> h1 {
+	h1 {
 		color: white;
 		font-size: 20px;
 	}
@@ -99,12 +104,15 @@ const Content = styled.div`
 
 const Top = styled.div`
 	display: flex;
-	width: 470px;
+	width: 100%;
 	justify-content: space-between;
+  div {
+    display: flex;
+    gap: 15px;
+  }
 	svg {
-		margin-left: 5px;
 		color: white;
-		font-size: 14px;
+		font-size: 15px;
 	}
 `;
 
@@ -121,6 +129,7 @@ const LinkContainer = styled.a`
 		height: 100%;
 		width: 155px;
 		border-radius: 0px 12px 13px 0px;
+    object-fit: cover;
 	}
 `;
 
