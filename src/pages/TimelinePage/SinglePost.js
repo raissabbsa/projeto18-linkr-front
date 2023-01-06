@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
 
-export default function SinglePost({ post, update, setUpdate}) {
+export default function SinglePost({ post, update, setUpdate }) {
   const { userData } = useContext(UserContext);
   const [edit, setEdit] = useState(false);
   const [newDescription, setDescription] = useState(post.description);
@@ -15,11 +15,11 @@ export default function SinglePost({ post, update, setUpdate}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.addEventListener("keydown", detectKeydown, true)
-  },[])
+    document.addEventListener("keydown", detectKeydown, true);
+  }, []);
 
-  function detectKeydown(e){
-    if(e.key === "Escape"){
+  function detectKeydown(e) {
+    if (e.key === "Escape") {
       setEdit(false);
     }
   }
@@ -36,26 +36,26 @@ export default function SinglePost({ post, update, setUpdate}) {
     }
   }
 
-  function sendEdition(e){
-		e.preventDefault();
+  function sendEdition(e) {
+    e.preventDefault();
     setLoading(true);
 
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
     const form = {
       description: newDescription,
-      id: post.id
-    }
+      id: post.id,
+    };
 
     const promise = axios.put(`${BASE_URL}/posts`, form, config);
     promise.then((res) => {
       setEdit(false);
-      setUpdate(update+1);
-		});
-		promise.catch((err) => {
-			console.log(err);
-			setLoading(false);
+      setUpdate(update + 1);
+    });
+    promise.catch((err) => {
+      console.log(err);
+      setLoading(false);
       alert("Unable to save changes");
-		});
+    });
   }
 
   function handlePost() {
@@ -255,5 +255,4 @@ const Form = styled.form`
     font-size: 20px;
     color: #4c4c4c;
   }
-`
-
+`;
