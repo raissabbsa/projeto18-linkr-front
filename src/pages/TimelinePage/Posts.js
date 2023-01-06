@@ -25,7 +25,7 @@ export default function Posts({ update }) {
       );
       console.log(err);
     });
-  },[update]);
+  },[update, userData.token]);
 
   function handlePosts() {
     if (finished && posts.length > 0) {
