@@ -11,6 +11,7 @@ export default function Posts({ update }) {
   const [finished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
 
+
   useEffect(() => {
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
     const promise = axios.get(`${BASE_URL}/posts`, config);
@@ -25,7 +26,7 @@ export default function Posts({ update }) {
       console.log(err);
     });
   },[update]);
-  
+
   function handlePosts() {
     if (finished && posts.length > 0) {
       return (
