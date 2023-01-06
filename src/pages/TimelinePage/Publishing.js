@@ -24,8 +24,6 @@ export default function Publishing({ setUpdate, update }) {
 			setForm({ link: "", description: "" });
 			setLoading(false);
 			setUpdate(update + 1);
-
-			//atualizar lista de posts
 		});
 		promise.catch((err) => {
 			console.log(err);

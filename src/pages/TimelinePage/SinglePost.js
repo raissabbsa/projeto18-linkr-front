@@ -1,83 +1,126 @@
 import styled from "styled-components";
 import { FaPencilAlt, FaRegHeart, FaTrash } from "react-icons/fa";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
 import { UserContext } from "../../providers/UserData";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../constants/urls";
+import axios from "axios";
 
-export default function SinglePost({post}) {
-    const { userData } = useContext(UserContext);
-    const [edit, setEdit] = useState(false);
-    const [newDescription, setDescription] = useState(post.description);
-    const navigate = useNavigate();
+export default function SinglePost({ post, update, setUpdate }) {
+  const { userData } = useContext(UserContext);
+  const [edit, setEdit] = useState(false);
+  const [newDescription, setDescription] = useState(post.description);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    function deletePost() {
-        alert("deletar post");
-      }
-    
-      function editPost() {
-        setEdit(true);
-        console.log("ah")
-      }
+  useEffect(() => {
+    document.addEventListener("keydown", detectKeydown, true);
+  }, []);
 
-      function handlePost() {
-        if (userData.id === post.user_id) {
-          return (
-            <Top>
-              <h1>{post.username}</h1>
-              <div>
-                <FaPencilAlt onClick={editPost} />
-                <FaTrash onClick={deletePost} />
-              </div>
-            </Top>
-          );
-        } else return <h1>{post.username}</h1>;
-      }
+  function detectKeydown(e) {
+    if (e.key === "Escape") {
+      setEdit(false);
+    }
+  }
 
-      function handleDescription(post) {
-        if (edit) {
-          return (
-            <input
-              name="description"
-              value={newDescription}
-              type="text"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          );
-        } else {
-          return (
-            <ReactTagify
-              tagStyle={tagStyle}
-              mentionStyle={mentionStyle}
-              tagClicked={(tag) => navigate(`/hashtag/${tag.substring(1)}`)}
-            >
-              <p>{`${post.description}`}</p>
-            </ReactTagify>
-          );
-        }
-      }
+  function deletePost() {
+    alert("deletar post");
+  }
 
-      return(
-      <PostContainer>
-        <Column>
-          <img src={post.picture_user} alt="img" />
-          <FaRegHeart />
-          <p>{post.likes} likes</p>
-        </Column>
-        <Content>
-          {handlePost(post.username, post.user_id)}
-          {handleDescription(post)}
+  function editPost() {
+    if (edit) {
+      setEdit(false);
+    } else {
+      setEdit(true);
+    }
+  }
 
-          <LinkContainer href={post.link} target="_blank">
-            <LinkInfo>
-              <p>{post.link_title}</p>
-              <p>{post.link_description}</p>
-              <p>{post.link}</p>
-            </LinkInfo>
-            <img src={post.link_image} alt="Site icon" />
-          </LinkContainer>
-        </Content>
-      </PostContainer>)
+  function sendEdition(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const form = {
+      description: newDescription,
+      id: post.id,
+    };
+
+    const promise = axios.put(`${BASE_URL}/posts`, form, config);
+    promise.then((res) => {
+      setEdit(false);
+      setUpdate(update + 1);
+    });
+    promise.catch((err) => {
+      console.log(err);
+      setLoading(false);
+      alert("Unable to save changes");
+    });
+  }
+
+  function handlePost() {
+    if (userData.id === post.user_id) {
+      return (
+        <Top>
+          <h1>{post.username}</h1>
+          <div>
+            <FaPencilAlt onClick={editPost} />
+            <FaTrash onClick={deletePost} />
+          </div>
+        </Top>
+      );
+    } else return <h1>{post.username}</h1>;
+  }
+
+  function handleDescription(post) {
+    if (edit) {
+      return (
+        <Form onSubmit={sendEdition}>
+          <input
+            name="description"
+            value={newDescription}
+            type="text"
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={loading ? "disabled" : ""}
+            autoFocus
+          />
+        </Form>
+      );
+    } else {
+      return (
+        <ReactTagify
+          tagStyle={tagStyle}
+          mentionStyle={mentionStyle}
+          tagClicked={(tag) => navigate(`/hashtag/${tag.substring(1)}`)}
+        >
+          <p>{`${post.description}`}</p>
+        </ReactTagify>
+      );
+    }
+  }
+
+  return (
+    <PostContainer>
+      <Column>
+        <img src={post.picture_user} alt="img" />
+        <FaRegHeart />
+        <p>{post.likes} likes</p>
+      </Column>
+      <Content>
+        {handlePost(post.username, post.user_id)}
+        {handleDescription(post)}
+
+        <LinkContainer href={post.link} target="_blank">
+          <LinkInfo>
+            <p>{post.link_title}</p>
+            <p>{post.link_description}</p>
+            <p>{post.link}</p>
+          </LinkInfo>
+          <img src={post.link_image} alt="Site icon" />
+        </LinkContainer>
+      </Content>
+    </PostContainer>
+  );
 }
 
 const PostContainer = styled.div`
@@ -200,3 +243,16 @@ const mentionStyle = {
   fontSize: 20,
   cursor: "pointer",
 };
+
+const Form = styled.form`
+  & > input {
+    width: 503px;
+    flex-wrap: wrap;
+    border-radius: 7px;
+    border: none;
+    background-color: #ffffff;
+    padding: 2px;
+    font-size: 20px;
+    color: #4c4c4c;
+  }
+`;

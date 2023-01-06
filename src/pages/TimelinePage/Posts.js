@@ -6,11 +6,10 @@ import { BASE_URL } from "../../constants/urls";
 import { UserContext } from "../../providers/UserData";
 import SinglePost from "./SinglePost";
 
-export default function Posts({ update }) {
+export default function Posts({ update, setUpdate }) {
   const [posts, setPosts] = useState([]);
   const [finished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
-
 
   useEffect(() => {
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
@@ -27,14 +26,13 @@ export default function Posts({ update }) {
     });
   }, [update, userData.token]);
 
-
   function handlePosts() {
     if (finished && posts.length > 0) {
       return (
         <>
           {posts.map((post) => (
             <span key={post.id}>
-              <SinglePost post={post}/>
+              <SinglePost post={post} update={update} setUpdate={setUpdate} />
             </span>
           ))}
         </>
