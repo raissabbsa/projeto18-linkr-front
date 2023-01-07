@@ -15,3 +15,9 @@ export function register(registerForm) {
 	const promise = axios.post(`${BASE_URL}/signup`, registerForm);
 	return promise;
 }
+
+export function searchUsers(name) {
+	console.log("🚀 ~ file: users.js:20 ~ searchUsers ~ name", name)
+	// const promise = axios.get(`${BASE_URL}/users/search?name=${name}`);
+	// return promise;
+}
