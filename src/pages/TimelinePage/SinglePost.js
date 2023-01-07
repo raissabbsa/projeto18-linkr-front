@@ -48,6 +48,10 @@ export default function SinglePost({ post, update, setUpdate }) {
 				promise.then(() => {
 					setUpdate(update + 1)
 				})
+				promise.catch((err) => {
+					console.log(err)
+					alert("Unable to delete post")
+				})
 			}
 		})
   }
