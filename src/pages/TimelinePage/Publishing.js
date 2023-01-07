@@ -39,8 +39,9 @@ export default function Publishing({ setUpdate, update }) {
 	}
 
 	async function publishHashtags(array) {
-		const promise = await axios.post(`${BASE_URL}/trending`, array);
 		try{
+			await axios.post(`${BASE_URL}/trending`, array);
+			setUpdate(update + 1);
 			console.log("okay");
 		}catch(err){
 			console.log(err);

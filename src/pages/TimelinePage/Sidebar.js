@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/urls";
 
 function Hashtags(prop) {
     return (
-        <h2># {prop.hashtag}</h2>
-    );
+        <Link to = {`/hashtag/${prop.hashtag}`} style={{ textDecoration: 'inherit' }}>
+            <h2># {prop.hashtag}</h2>
+        </Link>
+    )
 }
 
 export default function Sidebar(){
@@ -19,12 +22,12 @@ export default function Sidebar(){
         }).catch(err => {
             console.log(err.res.data);
         }); 
-    }, []);
+    })
 
     if(hashtags.length === 0) {
         return(
             <TrendingContainer display={`none`}></TrendingContainer>
-        );
+        )
 	}
 
     return(
@@ -35,8 +38,7 @@ export default function Sidebar(){
                 <Hashtags hashtag={value} key={i} /> 
             ))}
         </TrendingContainer>
-    );
-
+    )
 }
 
 const TrendingContainer = styled.div`
