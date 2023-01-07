@@ -40,7 +40,8 @@ export default function Publishing({ setUpdate, update }) {
 
 	async function publishHashtags(array) {
 		try{
-			await axios.post(`${BASE_URL}/trending`, array);
+			const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+			await axios.post(`${BASE_URL}/trending`, array, config);
 			setUpdate(update + 1);
 			console.log("okay");
 		}catch(err){
