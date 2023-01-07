@@ -42,13 +42,11 @@ export default function Publishing({ setUpdate, update }) {
 	//publishHashtags(hashtags);
 	async function publishHashtags(array) {
 		const promise = await axios.post(`${BASE_URL}/trending`, array);
-		promise
-			.then((res) => {
-				console.log("okay");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try{
+			console.log("okay");
+		}catch(err){
+			console.log(err);
+		}
 	}
 
 	function verifyHashtag(text) {
