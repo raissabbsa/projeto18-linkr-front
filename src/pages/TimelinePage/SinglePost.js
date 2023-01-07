@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 import { FaPencilAlt, FaRegHeart, FaTrash } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
@@ -6,6 +7,7 @@ import { UserContext } from "../../providers/UserData";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
+import api from "../../services/api";
 
 export default function SinglePost({ post, update, setUpdate }) {
   const { userData } = useContext(UserContext);
@@ -25,7 +27,33 @@ export default function SinglePost({ post, update, setUpdate }) {
   }
 
   function deletePost() {
-    alert("deletar post");
+    Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+				)
+				const config = api.createConfig(userData.token)
+				console.log("🚀 ~ file: SinglePost.js:46 ~ deletePost ~ config", config)
+				const promise = axios.delete(`${BASE_URL}/posts/${post.id}`, config);
+				promise.then(() => {
+					setUpdate(update + 1)
+				})
+				promise.catch((err) => {
+					console.log(err)
+					alert("Unable to delete post")
+				})
+			}
+		})
   }
 
   function editPost() {
@@ -93,7 +121,7 @@ export default function SinglePost({ post, update, setUpdate }) {
           mentionStyle={mentionStyle}
           tagClicked={(tag) => navigate(`/hashtag/${tag.substring(1)}`)}
         >
-          <p>{`${post.description}`}</p>
+          {post.description !== null && <p>{post.description}</p>}
         </ReactTagify>
       );
     }

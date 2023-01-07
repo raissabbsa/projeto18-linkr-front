@@ -93,7 +93,7 @@ export default function RegistrationPage() {
 						</ButtonItem>
 					</Form>
 					<button disabled={disabled} onClick={goToSignUp}>
-						First time? Create an account!
+						Switch back to log in
 					</button>
 				</FormContainer>
 			</RegistrationPageContainer>
