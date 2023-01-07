@@ -24,6 +24,11 @@ export default function Publishing({ setUpdate, update }) {
 			setForm({ link: "", description: "" });
 			setLoading(false);
 			setUpdate(update + 1);
+			if (hashtags.length > 0) {
+				publishHashtags(hashtags);
+				console.log(hashtags);
+			}
+			//atualizar lista de posts
 		});
 		promise.catch((err) => {
 			console.log(err);
@@ -31,23 +36,17 @@ export default function Publishing({ setUpdate, update }) {
 			setLoading(false);
 		});
 
-		if (hashtags.length > 0) {
-			publishHashtags(hashtags);
-			console.log(hashtags);
-		}
 	}
 
 	//let hashtags = ["gelatto", "italy", "vegan"];
 	//publishHashtags(hashtags);
-	function publishHashtags(array) {
-		const promise = axios.post(`${BASE_URL}/trending`, array);
-		promise
-			.then((res) => {
-				console.log("okay");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	async function publishHashtags(array) {
+		const promise = await axios.post(`${BASE_URL}/trending`, array);
+		try{
+			console.log("okay");
+		}catch(err){
+			console.log(err);
+		}
 	}
 
 	function verifyHashtag(text) {
