@@ -38,11 +38,11 @@ export default function Publishing({ setUpdate, update }) {
 
 	}
 
-	//let hashtags = ["gelatto", "italy", "vegan"];
-	//publishHashtags(hashtags);
 	async function publishHashtags(array) {
-		const promise = await axios.post(`${BASE_URL}/trending`, array);
 		try{
+			const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+			await axios.post(`${BASE_URL}/trending`, array, config);
+			setUpdate(update + 1);
 			console.log("okay");
 		}catch(err){
 			console.log(err);

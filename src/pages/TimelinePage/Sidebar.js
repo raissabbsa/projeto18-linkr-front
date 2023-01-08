@@ -1,25 +1,31 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 import { BASE_URL } from "../../constants/urls";
+import { UserContext } from "../../providers/UserData";
 
 function Hashtags(prop) {
     return (
-        <h2># {prop.hashtag}</h2>
-    );
+        <Link to = {`/hashtag/${prop.hashtag}`} style={{ textDecoration: 'inherit' }}>
+            <h2># {prop.hashtag}</h2>
+        </Link>
+    )
 }
 
 export default function Sidebar(){
     const [hashtags, setHashtags] = useState([]);
+    const { userData } = useContext(UserContext);
 
     useEffect(() => {
-        const promise = axios.get(`${BASE_URL}/trending`);
+        const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+        const promise = axios.get(`${BASE_URL}/trending`, config);
         promise.then(res => {
             setHashtags(res.data);
         }).catch(err => {
             console.log(err.res.data);
         }); 
-    }, []);
+    })
 
     if(hashtags.length === 0) {
         return(
@@ -36,7 +42,6 @@ export default function Sidebar(){
             ))}
         </TrendingContainer>
     );
-
 }
 
 const TrendingContainer = styled.div`
