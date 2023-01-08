@@ -92,8 +92,7 @@ const LoginPageScreen = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	background-color: #151515;
-	@media (max-width: 1170px) {
-		width: 100vw;
+	@media (max-width: 1365px) {
 		flex-direction: column;
 	}
 `;
@@ -106,7 +105,8 @@ const LoginPageTitle = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	padding: 144px;
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
+		min-width: auto;
 		height: auto;
 		justify-content: center;
 		padding: 0px;
@@ -130,7 +130,7 @@ const TitleContainer = styled.div`
 		line-height: 64px;
 		color: #ffffff;
 	}
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
 		width: 237px;
 		padding: 30px 0px;
 		h1 {
@@ -153,7 +153,9 @@ const LoginPageContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: #333333;
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
+		min-width: auto;
+		width: 100%;
 		height: auto;
 		flex-grow: 1;
 		align-items: flex-start;
@@ -176,7 +178,7 @@ const FormContainer = styled.div`
 		text-decoration: underline;
 		cursor: pointer;
 	}
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
 		width: 330px;
 		margin-top: 40px;
 		gap: 15px;
@@ -203,7 +205,7 @@ const Form = styled.form`
 		font-size: 27px;
 		line-height: 40px;
 	}
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
 		gap: 10px;
 		input {
 			font-size: 22px;
@@ -229,7 +231,7 @@ const ButtonItem = styled.button`
 	color: #ffffff;
 	background-color: #1877f2;
 	cursor: pointer;
-	@media (max-width: 1170px) {
+	@media (max-width: 1365px) {
 		height: 55px;
 		font-size: 22px;
 		line-height: 33px;
