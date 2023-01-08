@@ -1,10 +1,39 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import styled from "styled-components";
 import { BASE_URL } from "../../constants/urls";
 import { UserContext } from "../../providers/UserData";
 import SinglePost from "./SinglePost";
+import { PostsContainer, Loader } from "../../assets/style/PostsStyle.js"
+
+export function handlePosts(posts, update, setUpdate, finished) {
+  if (finished && posts.length > 0) {
+    return (
+      <>
+        {posts.map((post) => (
+          <span key={post.id}>
+            <SinglePost post={post} update={update} setUpdate={setUpdate} />
+          </span>
+        ))}
+      </>
+    );
+  } else if (finished && posts.length === 0) {
+    return <p>There are no posts yet</p>;
+  } else {
+    return (
+      <Loader>
+        <p>Loading </p>
+        <ThreeDots
+          type="Puff"
+          color="#FFFFFF"
+          height={20}
+          width={40}
+          timeout={2000}
+        />
+      </Loader>
+    );
+  }
+}
 
 export default function Posts({ update, setUpdate }) {
   const [posts, setPosts] = useState([]);
@@ -26,53 +55,9 @@ export default function Posts({ update, setUpdate }) {
     });
   }, [update, userData.token]);
 
-  function handlePosts() {
-    if (finished && posts.length > 0) {
-      return (
-        <>
-          {posts.map((post) => (
-            <span key={post.id}>
-              <SinglePost post={post} update={update} setUpdate={setUpdate} />
-            </span>
-          ))}
-        </>
-      );
-    } else if (finished && posts.length === 0) {
-      return <p>There are no posts yet</p>;
-    } else {
-      return (
-        <Loader>
-          <p>Loading </p>
-          <ThreeDots
-            type="Puff"
-            color="#FFFFFF"
-            height={20}
-            width={40}
-            timeout={2000}
-          />
-        </Loader>
-      );
-    }
-  }
-  return <PostsContainer>{handlePosts()}</PostsContainer>;
+  return (
+    <PostsContainer>
+      {handlePosts(posts, update, setUpdate, finished)}
+    </PostsContainer>
+  )
 }
-
-const PostsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  & > p {
-    color: white;
-    font-size: 30px;
-    margin-top: 20px;
-  }
-`;
-
-const Loader = styled.div`
-  display: flex;
-  align-items: center;
-  & > p {
-    color: white;
-    font-size: 25px;
-    margin-right: 10px;
-  }
-`;
