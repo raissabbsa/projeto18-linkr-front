@@ -16,16 +16,17 @@ function Hashtags(prop) {
 export default function Sidebar(){
     const [hashtags, setHashtags] = useState([]);
     const { userData } = useContext(UserContext);
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
     useEffect(() => {
-        const config = { headers: { Authorization: `Bearer ${userData.token}` } };
-        const promise = axios.get(`${BASE_URL}/trending`, config);
+		const promise = axios.get(`${BASE_URL}/trending`, config);
         promise.then(res => {
-            setHashtags(res.data);
+            const trending = (res.data);
+            setHashtags(trending);
         }).catch(err => {
             console.log(err.res.data);
-        }); 
-    })
+        });
+	});
 
     if(hashtags.length === 0) {
         return(
