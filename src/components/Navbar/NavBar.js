@@ -26,7 +26,7 @@ export default function NavBar() {
 	async function handleSearch() {
 		try {
 			const response = await api.searchUsers(search);
-			// setResults(response.data);
+			setResults(response.data);
 		} catch (err) {
 			console.log(err);
 			setResults([]);
