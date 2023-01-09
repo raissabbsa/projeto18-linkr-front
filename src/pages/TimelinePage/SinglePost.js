@@ -98,7 +98,7 @@ export default function SinglePost({ post, update, setUpdate }) {
           </div>
         </Top>
       );
-    } else return <h1>{post.username}</h1>;
+    } else return <h1 onClick={() => navigate(`/user/${post.user_id}`)}>{post.username}</h1>;
   }
 
   function handleDescription(post) {
