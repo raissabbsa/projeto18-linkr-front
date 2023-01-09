@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { handlePosts } from './Posts';
 import { PostsContainer, Loader } from "../../assets/style/PostsStyle.js"
 import { ThreeDots } from "react-loader-spinner";
+import styled from "styled-components";
 
 export default function UserPage() {
   const [update, setUpdate] = useState(0);
@@ -42,8 +43,10 @@ export default function UserPage() {
             <NavBar/>
             <BodyContent>
                 <TimelineContainer>
-                    <img src={items[0].picture_user} alt="img" />
-                    <h1>{items[0].username}'s posts</h1>
+                    <TitlePageContent>
+                        <img src={items[0].picture_user} alt="img" /> 
+                        <h1>{items[0].username}'s posts</h1>
+                    </TitlePageContent>
                     <PostsContainer>
                         {handlePosts(items, update, setUpdate, finished)}
                     </PostsContainer>
@@ -61,3 +64,24 @@ export default function UserPage() {
         );
     }
 }
+
+const TitlePageContent = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 43px;
+    h1 {
+        font-size: 43px;
+        font-weight: 700;
+        font-family: 'Oswald';
+        color: #FFFFFF;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 25px;
+        margin-left: 23px;
+    }
+`
