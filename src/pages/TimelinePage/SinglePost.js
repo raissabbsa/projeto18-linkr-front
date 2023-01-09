@@ -90,7 +90,7 @@ export default function SinglePost({ post, update, setUpdate }) {
     if (userData.id === post.user_id) {
       return (
         <Top>
-          <h1>{post.username}</h1>
+          <h1 onClick={() => navigate(`/user/${post.user_id}`)}>{post.username}</h1>
           <div>
             <FaPencilAlt onClick={editPost} />
             <FaTrash onClick={deletePost} />
@@ -202,6 +202,7 @@ const Content = styled.div`
   h1 {
     color: white;
     font-size: 22px;
+    cursor: pointer;
   }
 `;
 
