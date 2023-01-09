@@ -6,7 +6,7 @@ import { UserContext } from "../../providers/UserData";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
-import handlePosts from './Posts';
+import { handlePosts } from './Posts';
 import { PostsContainer } from "../../assets/style/PostsStyle.js"
 
 export default function HashtagPage() {
@@ -26,7 +26,7 @@ export default function HashtagPage() {
     req.catch(error => {
       console.log(error);
     });
-  }, [update, userData.token, hashtag]);
+  }, [update, userData.token, hashtag, items]);
 
   return(
     <>
