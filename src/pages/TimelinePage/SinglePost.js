@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Swal from 'sweetalert2'
-import { FaPencilAlt, FaRegHeart, FaTrash } from "react-icons/fa";
+import { FaPencilAlt, FaRegHeart, FaHeart, FaTrash } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
 import { UserContext } from "../../providers/UserData";
@@ -14,6 +14,7 @@ export default function SinglePost({ post, update, setUpdate }) {
   const [edit, setEdit] = useState(false);
   const [newDescription, setDescription] = useState(post.description);
   const [loading, setLoading] = useState(false);
+  const [like, setLike] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -127,11 +128,32 @@ export default function SinglePost({ post, update, setUpdate }) {
     }
   }
 
+  function sendLike(){
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const form = {
+      postId: post.id,
+    };
+
+    if(like){
+      setLike(false);
+    }else{
+      setLike(true);
+    }
+
+    const promise = axios.post(`${BASE_URL}/like`, form, config);
+    promise.then((res) => {
+      
+    });
+    promise.catch((err) => {
+      console.log(err);
+    });
+  }
+
   return (
     <PostContainer>
       <Column>
         <img src={post.picture_user} alt="img" />
-        <FaRegHeart />
+        <div onClick={() => sendLike()}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
         <p>{post.likes} likes</p>
       </Column>
       <Content>
