@@ -37,6 +37,9 @@ export const Column = styled.div`
     color: white;
     font-size: 12px;
   }
+  @media (max-width: 611px) {
+    width: 25%;
+  }
 `;
 
 export const Content = styled.div`
@@ -79,6 +82,9 @@ export const Top = styled.div`
     color: white;
     font-size: 15px;
   }
+  @media (max-width: 611px) {
+    width: 100%;
+  }
 `;
 export const LinkContainer = styled.a`
   width: 100%;
@@ -94,6 +100,9 @@ export const LinkContainer = styled.a`
     width: 155px;
     border-radius: 0px 12px 13px 0px;
     object-fit: cover;
+  }
+  @media (max-width: 611px) {
+    width: 95%;
   }
 `;
 export const LinkInfo = styled.div`
@@ -140,7 +149,7 @@ export const Form = styled.form`
   }
   @media (max-width: 611px) {
     input{
-        width: 75vh;
+        width: 100%;
     }
   }
 `;
