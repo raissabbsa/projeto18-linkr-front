@@ -39,7 +39,10 @@ export const Column = styled.div`
   }
   @media (max-width: 611px) {
     width: 15%;
-    padding-left: 20px;
+    padding-left: 40px;
+    p{
+        font-size: 10px;
+    }
   }
 `;
 
@@ -61,6 +64,15 @@ export const Content = styled.div`
     color: white;
     font-size: 22px;
     cursor: pointer;
+  }
+  @media (max-width: 611px) {
+    p{
+        font-size: 15px;
+    }
+    h1{
+        margin-left: 0;
+        font-size: 17px;
+    }
   }
 `;
 
@@ -85,6 +97,10 @@ export const Top = styled.div`
   }
   @media (max-width: 611px) {
     width: 100%;
+    h1{
+        font-size: 17px;
+        margin-left: 0;
+    }
   }
 `;
 export const LinkContainer = styled.a`
