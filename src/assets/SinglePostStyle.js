@@ -12,7 +12,6 @@ export const PostContainer = styled.div`
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;
-    padding-right: 40px;
   }
 `;
 
@@ -37,6 +36,13 @@ export const Column = styled.div`
     color: white;
     font-size: 12px;
   }
+  @media (max-width: 611px) {
+    width: 20%;
+    padding-left: 50px;
+    p{
+        font-size: 8px;
+    }
+  }
 `;
 
 export const Content = styled.div`
@@ -57,6 +63,15 @@ export const Content = styled.div`
     color: white;
     font-size: 22px;
     cursor: pointer;
+  }
+  @media (max-width: 611px) {
+    p{
+        font-size: 15px;
+    }
+    h1{
+        margin-left: 0;
+        font-size: 17px;
+    }
   }
 `;
 
@@ -79,6 +94,14 @@ export const Top = styled.div`
     color: white;
     font-size: 15px;
   }
+  @media (max-width: 611px) {
+    width: 100%;
+    padding-right: 10px;
+    h1{
+        font-size: 17px;
+        margin-left: 0;
+    }
+  }
 `;
 export const LinkContainer = styled.a`
   width: 100%;
@@ -94,6 +117,9 @@ export const LinkContainer = styled.a`
     width: 155px;
     border-radius: 0px 12px 13px 0px;
     object-fit: cover;
+  }
+  @media (max-width: 611px) {
+    width: 95%;
   }
 `;
 export const LinkInfo = styled.div`
@@ -140,7 +166,7 @@ export const Form = styled.form`
   }
   @media (max-width: 611px) {
     input{
-        width: 75vh;
+        width: 100%;
     }
   }
 `;

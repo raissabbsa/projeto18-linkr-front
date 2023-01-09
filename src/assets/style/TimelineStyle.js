@@ -16,7 +16,8 @@ export const TimelineContainer = styled.div`
   @media (max-width: 1024px) {
     margin-top: 30px;
     h1{
-      margin-left: 30px;
+      margin-left: 60px;
+      font-size: 33px;
     }
   }
 `
