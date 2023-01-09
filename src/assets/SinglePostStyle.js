@@ -12,7 +12,6 @@ export const PostContainer = styled.div`
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;
-    padding-right: 40px;
   }
 `;
 
@@ -97,6 +96,7 @@ export const Top = styled.div`
   }
   @media (max-width: 611px) {
     width: 100%;
+    padding-right: 10px;
     h1{
         font-size: 17px;
         margin-left: 0;
