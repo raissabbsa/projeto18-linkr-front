@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function UserSearched({ user }) {
-	const { picture_url, username } = user;
+	const navigate = useNavigate();
+
+	const { picture_url, username, id } = user;
 	return (
-		<UserContainer>
+		<UserContainer onClick={() => navigate(`/user/${id}`)}>
 			<img src={picture_url} alt="avatar" />
 			<p>{username}</p>
 		</UserContainer>
@@ -14,6 +17,7 @@ const UserContainer = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 15px;
+	cursor: pointer;
 	img {
 		width: 40px;
 		height: 40px;
