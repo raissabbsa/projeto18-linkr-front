@@ -38,7 +38,8 @@ export const Column = styled.div`
     font-size: 12px;
   }
   @media (max-width: 611px) {
-    width: 25%;
+    width: 15%;
+    padding-left: 20px;
   }
 `;
 

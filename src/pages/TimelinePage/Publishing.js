@@ -130,6 +130,7 @@ const ShareCotainer = styled.div`
 	width: 100%;
     h1 {
 		font-size: 17px;
+		margin-left: 40px;
     }
   }
 `;
@@ -165,7 +166,8 @@ const Form = styled.form`
   @media (max-width: 611px) {
 	width: 100%;
     input {
-      width: 100%;
+      width: 92%;
+	  margin-left: 40px;
     }
 	button{
 		font-size: 13px;
