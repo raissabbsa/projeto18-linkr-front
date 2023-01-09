@@ -13,6 +13,12 @@ export const TimelineContainer = styled.div`
     color: #FFFFFF;
     margin-bottom: 43px;
   }
+  @media (max-width: 1024px) {
+    margin-top: 30px;
+    h1{
+      margin-left: 30px;
+    }
+  }
 `
 export const BodyContent = styled.div`
   display: flex;

@@ -17,7 +17,6 @@ export default function Publishing({ setUpdate, update }) {
 		setLoading(true);
 
 		let hashtags = verifyHashtag(form.description);
-		console.log(form)
 
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 		const promise = axios.post(`${BASE_URL}/posts`, form, config);
@@ -27,7 +26,7 @@ export default function Publishing({ setUpdate, update }) {
 			setUpdate(update + 1);
 			if (hashtags.length > 0) {
 				publishHashtags(hashtags);
-				console.log(hashtags);
+				// console.log(hashtags);
 			}
 			//atualizar lista de posts
 		});
@@ -44,7 +43,7 @@ export default function Publishing({ setUpdate, update }) {
 			const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 			await axios.post(`${BASE_URL}/trending`, array, config);
 			setUpdate(update + 1);
-			console.log("okay");
+			// console.log("okay");
 		}catch(err){
 			console.log(err);
 		}
@@ -93,6 +92,14 @@ const PublishContainer = styled.div`
 		border-radius: 50%;
 		object-fit: cover;
 	}
+	@media (max-width: 611px) {
+    width: 100%;
+    border-radius: 0;
+    padding-right: 40px;
+	img{
+		display: none;
+	}
+  }
 `;
 
 const ShareCotainer = styled.div`
@@ -135,4 +142,9 @@ const Form = styled.form`
 		padding: 5px;
 		cursor: pointer;
 	}
+	@media (max-width: 611px) {
+    input{
+		width: 85vh;
+	}
+  }
 `;
