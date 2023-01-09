@@ -24,7 +24,7 @@ export default function UserPage() {
     req.then(res => {
       setFinished(true);
       setItems(res.data);
-      console.log(items);
+    //   console.log(items);
     });
     req.catch(error => {
       console.log(error);

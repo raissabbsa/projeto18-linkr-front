@@ -83,4 +83,7 @@ const TrendingContainer = styled.div`
         line-height: 23px;
         letter-spacing: 0.05em;
     }
+    @media (max-width: 1024px) {
+        display: none;
+    }
 `
