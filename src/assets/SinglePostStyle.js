@@ -38,10 +38,10 @@ export const Column = styled.div`
     font-size: 12px;
   }
   @media (max-width: 611px) {
-    width: 15%;
-    padding-left: 40px;
+    width: 20%;
+    padding-left: 50px;
     p{
-        font-size: 10px;
+        font-size: 8px;
     }
   }
 `;
