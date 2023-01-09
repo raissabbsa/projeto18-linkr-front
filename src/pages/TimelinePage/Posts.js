@@ -10,8 +10,8 @@ export function handlePosts(posts, update, setUpdate, finished) {
   if (finished && posts.length > 0) {
     return (
       <>
-        {posts.map((post) => (
-          <span key={post.id}>
+        {posts.map((post, index) => (
+          <span key={index}>
             <SinglePost post={post} update={update} setUpdate={setUpdate} />
           </span>
         ))}
@@ -53,7 +53,7 @@ export default function Posts({ update, setUpdate }) {
       );
       console.log(err);
     });
-  }, [update, userData.token]);
+  }, [update, userData.token, posts]);
 
   return (
     <PostsContainer>
