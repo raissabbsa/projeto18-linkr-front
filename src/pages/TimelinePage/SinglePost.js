@@ -70,11 +70,28 @@ export default function SinglePost({ post, update, setUpdate }) {
     setLoading(true);
 
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    let newHashtags = verifyHashtag(newDescription);
+    let oldHashtags = verifyHashtag(post.description);
+    console.log(newHashtags, oldHashtags, post.id);
+    if(newHashtags.length>0 || oldHashtags.length>0){
+      const form = {
+        post_id: post.id,
+        antigas: oldHashtags,
+        novas: newHashtags
+      }
+      const promise = axios.put(`${BASE_URL}/hashtag`, form, config);
+      promise.then((res) => {
+        setUpdate(update + 1);
+      });
+      promise.catch((err) => {
+        console.log(err);
+      });
+    }
+
     const form = {
       description: newDescription,
       id: post.id,
-    };
-
+    }
     const promise = axios.put(`${BASE_URL}/posts`, form, config);
     promise.then((res) => {
       setEdit(false);
@@ -101,7 +118,7 @@ export default function SinglePost({ post, update, setUpdate }) {
     } else return <h1>{post.username}</h1>;
   }
 
-  function handleDescription(post) {
+  function handleDescription() {
     if (edit) {
       return (
         <Form onSubmit={sendEdition}>
@@ -149,6 +166,18 @@ export default function SinglePost({ post, update, setUpdate }) {
     });
   }
 
+  function verifyHashtag(text) {
+    let array = text.split(" ");
+    let hashtags = [];
+    array.map((item) => {
+      if (item[0] === "#") {
+        hashtags.push(item.substr(1));
+      }
+      return "";
+    });
+    return hashtags;
+  }
+
   return (
     <PostContainer>
       <Column>
@@ -157,8 +186,8 @@ export default function SinglePost({ post, update, setUpdate }) {
         <p>{post.likes} likes</p>
       </Column>
       <Content>
-        {handlePost(post.username, post.user_id)}
-        {handleDescription(post)}
+        {handlePost()}
+        {handleDescription()}
 
         <LinkContainer href={post.link} target="_blank">
           <LinkInfo>

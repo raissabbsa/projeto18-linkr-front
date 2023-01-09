@@ -17,6 +17,7 @@ export default function Publishing({ setUpdate, update }) {
 		setLoading(true);
 
 		let hashtags = verifyHashtag(form.description);
+		console.log(form)
 
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 		const promise = axios.post(`${BASE_URL}/posts`, form, config);
