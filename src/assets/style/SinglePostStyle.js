@@ -38,7 +38,6 @@ export const Column = styled.div`
 	}
 	@media (max-width: 611px) {
 		width: 20%;
-		padding-left: 50px;
 		p {
 			font-size: 8px;
 		}
@@ -129,15 +128,18 @@ export const LinkInfo = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: flex-start;
+	gap: 10px;
 	p:nth-child(1) {
 		font-size: 16px;
 		line-height: 19px;
 		color: #cecece;
+		overflow: hidden;
 	}
 	p:nth-child(2) {
 		font-size: 11px;
 		line-height: 13px;
 		color: #9b9595;
+		overflow: hidden;
 	}
 	p:nth-child(3) {
 		font-size: 11px;

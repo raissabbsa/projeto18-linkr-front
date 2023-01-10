@@ -45,7 +45,7 @@ export default function Posts({ update, setUpdate }) {
 			alert("An error occured while trying to fetch the posts, please refresh the page");
 			console.log(err);
 		});
-	}, [update, userData.token, posts]);
+	}, [update, userData.token]);
 
 	return <PostsContainer>{handlePosts(posts, update, setUpdate, finished)}</PostsContainer>;
 }

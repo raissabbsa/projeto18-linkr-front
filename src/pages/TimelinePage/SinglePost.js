@@ -40,11 +40,8 @@ export default function SinglePost({ post, update, setUpdate }) {
 			if (result.isConfirmed) {
 				Swal.fire("Deleted!", "Your file has been deleted.", "success");
 				const config = api.createConfig(userData.token);
-				// console.log(
-				//   "🚀 ~ file: SinglePost.js:46 ~ deletePost ~ config",
-				//   config
-				// );
 				const promise = axios.delete(`${BASE_URL}/posts/${post.id}`, config);
+
 				promise.then(() => {
 					setUpdate(update + 1);
 				});

@@ -14,6 +14,7 @@ import styled from "styled-components";
 export default function UserPage() {
 	const [update, setUpdate] = useState(0);
 	const [items, setItems] = useState([]);
+	const [following, setFollowing] = useState(false);
 	const { id } = useParams();
 	const { userData } = useContext(UserContext);
 	const [finished, setFinished] = useState(false);
@@ -28,7 +29,26 @@ export default function UserPage() {
 		req.catch((error) => {
 			console.log(error);
 		});
-	}, [update, userData.token, id, items]);
+		const req2 = axios.get(`${BASE_URL}/user/${id}/status`, config);
+		req2.then((res) => {
+			if (res.data.length > 0) {
+				setFollowing(true);
+			}
+		});
+		req2.catch((error) => {
+			console.log(error);
+		});
+	}, [update, userData.token, id]);
+
+	function follow() {
+		alert("followed");
+		setFollowing(true);
+	}
+
+	function unfollow() {
+		alert("unfollowed");
+		setFollowing(false);
+	}
 
 	if (finished && items.length === 0) {
 		return (
@@ -42,9 +62,12 @@ export default function UserPage() {
 				<NavBar />
 				<BodyContent>
 					<TimelineContainer>
-						<TitlePageContent>
-							<img src={items[0].picture_user} alt="img" />
-							<h1>{items[0].username}'s posts</h1>
+						<TitlePageContent following={following}>
+							<div>
+								<img src={items[0].picture_user} alt="img" />
+								<h1>{items[0].username}'s posts</h1>
+							</div>
+							{userData.id === Number(id) ? "" : following ? <button onClick={unfollow}>Unfollow</button> : <button onClick={follow}>Follow</button>}
 						</TitlePageContent>
 						<PostsContainer>{handlePosts(items, update, setUpdate, finished)}</PostsContainer>
 					</TimelineContainer>
@@ -63,9 +86,11 @@ export default function UserPage() {
 }
 
 const TitlePageContent = styled.div`
+	width: 100%;
+	padding: 0px 20px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	align-items: flex-end;
+	justify-content: space-between;
 	margin-bottom: 43px;
 	h1 {
 		font-size: 43px;
@@ -78,7 +103,22 @@ const TitlePageContent = styled.div`
 		height: 50px;
 		border-radius: 50%;
 		object-fit: cover;
-		margin-right: 25px;
-		margin-left: 23px;
+	}
+	div {
+		display: flex;
+		align-items: center;
+		gap: 30px;
+	}
+	button {
+		width: 112px;
+		padding: 8px 0px;
+		background: ${(props) => (props.following ? "#1877F2" : "#FFFFFF")};
+		color: ${(props) => (props.following ? "#FFFFFF" : "#1877F2")};
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 17px;
+		border-radius: 5px;
+		border: none;
+		cursor: pointer;
 	}
 `;

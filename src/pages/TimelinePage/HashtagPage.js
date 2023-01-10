@@ -26,7 +26,7 @@ export default function HashtagPage() {
 		req.catch((error) => {
 			console.log(error);
 		});
-	}, [update, userData.token, hashtag, items]);
+	}, [update, userData.token, hashtag]);
 
 	return (
 		<>
