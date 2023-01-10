@@ -135,25 +135,29 @@ export default function SinglePost({ post, update, setUpdate }) {
     };
 
     if(like){
-      setLike(false);
-    }else{
-      setLike(true);
+      const promise = axios.delete(`${BASE_URL}/dislike/${post.id}`, config);
+      promise.then((res) => {
+        setLike(false);
+      });
+      promise.catch((err) => {
+        console.log(err);
+      });
+    }else{      
+      const promise = axios.post(`${BASE_URL}/like`, form, config);
+      promise.then((res) => {
+        setLike(true);
+      });
+      promise.catch((err) => {
+        console.log(err);
+      });
     }
-
-    const promise = axios.post(`${BASE_URL}/like`, form, config);
-    promise.then((res) => {
-      
-    });
-    promise.catch((err) => {
-      console.log(err);
-    });
   }
 
   return (
     <PostContainer>
       <Column>
         <img src={post.picture_user} alt="img" />
-        <div onClick={() => sendLike()}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
+        <div onClick={sendLike}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
         <p>{post.likes} likes</p>
       </Column>
       <Content>
