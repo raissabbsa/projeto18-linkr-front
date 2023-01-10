@@ -6,18 +6,18 @@ import { BodyContent, TimelineContainer } from "../../assets/style/TimelineStyle
 import { useState } from "react";
 
 export default function TimelinePage() {
-  const [update, setUpdate] = useState(0);
-  return (
-    <>
-      <NavBar/>
-      <BodyContent>
-        <TimelineContainer>
-            <h1>timeline</h1>
-            <Publishing setUpdate = {setUpdate} update = {update}/>
-            <Posts update = {update} setUpdate = {setUpdate}/>
-        </TimelineContainer>
-        <Sidebar />
-      </BodyContent>  
-    </>
-  );
+	const [update, setUpdate] = useState(0);
+	return (
+		<>
+			<NavBar />
+			<BodyContent>
+				<TimelineContainer>
+					<h1>timeline</h1>
+					<Publishing setUpdate={setUpdate} update={update} />
+					<Posts update={update} setUpdate={setUpdate} />
+				</TimelineContainer>
+				<Sidebar />
+			</BodyContent>
+		</>
+	);
 }

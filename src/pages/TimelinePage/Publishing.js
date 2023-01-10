@@ -26,25 +26,21 @@ export default function Publishing({ setUpdate, update }) {
 			setUpdate(update + 1);
 			if (hashtags.length > 0) {
 				publishHashtags(hashtags);
-				console.log(hashtags);
 			}
-			//atualizar lista de posts
 		});
 		promise.catch((err) => {
 			console.log(err);
 			alert("Houve um erro ao publicar seu link");
 			setLoading(false);
 		});
-
 	}
 
 	async function publishHashtags(array) {
-		try{
+		try {
 			const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 			await axios.post(`${BASE_URL}/trending`, array, config);
 			setUpdate(update + 1);
-			console.log("okay");
-		}catch(err){
+		} catch (err) {
 			console.log(err);
 		}
 	}
@@ -92,17 +88,32 @@ const PublishContainer = styled.div`
 		border-radius: 50%;
 		object-fit: cover;
 	}
+	@media (max-width: 611px) {
+		width: 100%;
+		border-radius: 0;
+		padding-right: 40px;
+		img {
+			display: none;
+		}
+	}
 `;
 
 const ShareCotainer = styled.div`
 	display: flex;
 	flex-direction: column;
-  gap: 10px;
+	gap: 10px;
 	& > h1 {
 		font-weight: 300;
 		font-size: 20px;
 		line-height: 24px;
 		color: #707070;
+	}
+	@media (max-width: 611px) {
+		width: 100%;
+		h1 {
+			font-size: 14px;
+			margin-left: 40px;
+		}
 	}
 `;
 
@@ -123,7 +134,7 @@ const Form = styled.form`
 		height: 60px;
 	}
 	button {
-    align-self: flex-end;
+		align-self: flex-end;
 		width: 100px;
 		height: 35px;
 		background-color: #1977f2;
@@ -133,5 +144,17 @@ const Form = styled.form`
 		font-weight: 600;
 		padding: 5px;
 		cursor: pointer;
+	}
+	@media (max-width: 611px) {
+		width: 100%;
+		input {
+			width: 92%;
+			margin-left: 40px;
+		}
+		button {
+			font-size: 13px;
+			height: 22px;
+			margin-bottom: 20px;
+		}
 	}
 `;

@@ -49,18 +49,48 @@ export default function NavBar() {
 	}, [search]);
 
 	return (
-		<NavContainer>
-			<StyledLink to="/timeline">linkr</StyledLink>
-			<SearchBarContainer>
+		<>
+			<NavContainer>
+				<StyledLink to="/timeline">linkr</StyledLink>
+				<SearchBarContainer>
+					<SearchContainer>
+            <DebounceInput
+              onClick={searchExist}
+              placeholder="Search for people"
+              minLength={3}
+              debounceTimeout={300}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+						<BiSearchAlt2 onClick={handleSearch} />
+					</SearchContainer>
+					<ResultsContainer showResults={showResults}>
+						{results.map((user) => (
+							<UserSearched user={user} key={user.id} />
+						))}
+					</ResultsContainer>
+					<CloseResultContainer showResults={showResults} onClick={() => setShowResults(false)} />
+				</SearchBarContainer>
+				<UserOptionsContainer userOptions={userOptions}>
+					<FaChevronDown onClick={() => setUserOptions(!userOptions)} />
+					<img src={userData.picture_url} alt="Usuário" onClick={() => setUserOptions(!userOptions)} />
+					<LogoutContainer userOptions={userOptions}>
+						<span>Olá {userData.username}!</span>
+						<button onClick={handleLogout}>LogOut</button>
+					</LogoutContainer>
+				</UserOptionsContainer>
+				<CloseMenuContainer userOptions={userOptions} onClick={() => setUserOptions(false)} />
+			</NavContainer>
+			<BottomSearchBar>
 				<SearchContainer>
-					<DebounceInput
-						onClick={searchExist}
-						placeholder="Search for people"
-						minLength={3}
-						debounceTimeout={300}
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-					/>
+          <DebounceInput
+            onClick={searchExist}
+            placeholder="Search for people"
+            minLength={3}
+            debounceTimeout={300}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 					<BiSearchAlt2 onClick={handleSearch} />
 				</SearchContainer>
 				<ResultsContainer showResults={showResults}>
@@ -69,17 +99,8 @@ export default function NavBar() {
 					))}
 				</ResultsContainer>
 				<CloseResultContainer showResults={showResults} onClick={() => setShowResults(false)} />
-			</SearchBarContainer>
-			<UserOptionsContainer userOptions={userOptions}>
-				<FaChevronDown onClick={() => setUserOptions(!userOptions)} />
-				<img src={userData.picture_url} alt="Usuário" onClick={() => setUserOptions(!userOptions)} />
-				<LogoutContainer userOptions={userOptions}>
-					<span>Olá {userData.username}!</span>
-					<button onClick={handleLogout}>LogOut</button>
-				</LogoutContainer>
-			</UserOptionsContainer>
-			<CloseMenuContainer userOptions={userOptions} onClick={() => setUserOptions(false)} />
-		</NavContainer>
+			</BottomSearchBar>
+		</>
 	);
 }
 
@@ -103,6 +124,18 @@ const NavContainer = styled.div`
 	}
 `;
 
+const BottomSearchBar = styled.div`
+	display: none;
+	@media (max-width: 1024px) {
+		display: flex;
+		z-index: 2;
+		position: relative;
+		width: 92%;
+		margin-bottom: none;
+		margin: 100px auto 0;
+	}
+`;
+
 const StyledLink = styled(Link)`
 	font-family: "Passion One";
 	font-weight: 700;
@@ -117,6 +150,9 @@ const SearchBarContainer = styled.div`
 	z-index: 2;
 	position: relative;
 	width: 563px;
+	@media (max-width: 1024px) {
+		display: none;
+	}
 `;
 
 const SearchContainer = styled.div`
@@ -145,6 +181,11 @@ const SearchContainer = styled.div`
 	svg {
 		font-size: 28px;
 		color: #c6c6c6;
+	}
+	@media (max-width: 1024px) {
+		svg {
+			margin-right: 5px;
+		}
 	}
 `;
 
