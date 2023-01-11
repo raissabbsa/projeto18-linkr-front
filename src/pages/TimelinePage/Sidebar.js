@@ -13,7 +13,7 @@ function Hashtags(prop) {
 	);
 }
 
-export default function Sidebar() {
+export default function Sidebar({ update }) {
 	const [hashtags, setHashtags] = useState([]);
 	const { userData } = useContext(UserContext);
 	const config = { headers: { Authorization: `Bearer ${userData.token}` } };
@@ -28,14 +28,10 @@ export default function Sidebar() {
 			.catch((err) => {
 				console.log(err);
 			});
-	});
-
-	if (hashtags.length === 0) {
-		return <TrendingContainer display={`none`}></TrendingContainer>;
-	}
+	}, [update, userData.token]);
 
 	return (
-		<TrendingContainer display={`flex`}>
+		<TrendingContainer display={ (hashtags.length === 0) ? 'none' : 'flex' }>
 			<h1>trending</h1>
 			<div></div>
 			{hashtags.map((value, i) => (
