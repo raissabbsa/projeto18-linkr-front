@@ -193,7 +193,7 @@ export default function SinglePost({ post, update, setUpdate }) {
       promise.catch((err) => {
         console.log(err);
       });
-    } else {
+    }else{
       const promise = axios.post(`${BASE_URL}/like`, form, config);
       promise.then((res) => {
         setLike(true);
@@ -250,3 +250,4 @@ export default function SinglePost({ post, update, setUpdate }) {
     </Post>
   );
 }
+
