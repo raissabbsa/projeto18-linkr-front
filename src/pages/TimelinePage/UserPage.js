@@ -10,6 +10,7 @@ import { handlePosts } from "./Posts";
 import { PostsContainer, Loader } from "../../assets/style/PostsStyle.js";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
+import api from "../../services/api";
 
 export default function UserPage() {
 	const [update, setUpdate] = useState(0);
@@ -18,6 +19,7 @@ export default function UserPage() {
 	const { id } = useParams();
 	const { userData } = useContext(UserContext);
 	const [finished, setFinished] = useState(false);
+	const [disabled, setDisabled] = useState(false);
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
@@ -41,13 +43,35 @@ export default function UserPage() {
 	}, [update, userData.token, id]);
 
 	function follow() {
-		alert("followed");
-		setFollowing(true);
+		setDisabled(true);
+
+		api
+			.follow(id, userData.token)
+			.then((res) => {
+				setFollowing(true);
+				setDisabled(false);
+				setUpdate(update + 1);
+			})
+			.catch((error) => {
+				alert("Error, try again");
+				setDisabled(false);
+			});
 	}
 
 	function unfollow() {
-		alert("unfollowed");
-		setFollowing(false);
+		setDisabled(true);
+
+		api
+			.unfollow(id, userData.token)
+			.then((res) => {
+				setFollowing(false);
+				setDisabled(false);
+				setUpdate(update + 1);
+			})
+			.catch((error) => {
+				alert("Error, try again");
+				setDisabled(false);
+			});
 	}
 
 	if (finished && items.length === 0) {
@@ -67,7 +91,17 @@ export default function UserPage() {
 								<img src={items[0].picture_user} alt="img" />
 								<h1>{items[0].username}'s posts</h1>
 							</div>
-							{userData.id === Number(id) ? "" : following ? <button onClick={unfollow}>Unfollow</button> : <button onClick={follow}>Follow</button>}
+							{userData.id === Number(id) ? (
+								""
+							) : following ? (
+								<button disabled={disabled} onClick={unfollow}>
+									Unfollow
+								</button>
+							) : (
+								<button disabled={disabled} onClick={follow}>
+									Follow
+								</button>
+							)}
 						</TitlePageContent>
 						<PostsContainer>{handlePosts(items, update, setUpdate, finished)}</PostsContainer>
 					</TimelineContainer>

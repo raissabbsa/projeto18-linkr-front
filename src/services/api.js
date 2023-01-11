@@ -1,10 +1,12 @@
-import { createConfig, login, register, searchUsers } from "./users";
+import { createConfig, login, register, searchUsers, follow, unfollow } from "./users";
 
 const api = {
 	createConfig,
 	login,
 	register,
 	searchUsers,
+	follow,
+	unfollow
 };
 
 export default api;

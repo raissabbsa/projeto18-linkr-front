@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../../providers/UserData";
 import { FaPaperPlane } from "react-icons/fa";
-import CommentPage from "./CommentPage";
+import LoadComments from "./LoadComments";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 
@@ -13,7 +13,7 @@ export default function Comments({post, update, setUpdate}){
 
     function handleComments(){
         if(post.comments.length>0){
-            return(<>{post.comments.map((comment) => <CommentPage key={comment.id} comment={comment}/>)}</>);
+            return(<>{post.comments.map((comment) => <LoadComments key={comment.id} comment={comment} post={post}/>)}</>);
         }
         else{
             return "";
@@ -27,11 +27,10 @@ export default function Comments({post, update, setUpdate}){
             post_id: post.id,
             comment: newComment
         }
-        console.log(form)
         const promise = axios.post(`${BASE_URL}/comments`, form, config);
         promise.then((res) => {
-            console.log("ah")
             setUpdate(update+1);
+            setComment("");
         })
         promise.catch((err) => {
             console.log(err);
@@ -55,18 +54,16 @@ export default function Comments({post, update, setUpdate}){
                 />
             </form>
             <FaPaperPlane onClick={sendComment}/>
-
         </Bottom>
-        
-
     </CommentsContainer>)
 }
 
 const CommentsContainer = styled.div`
-
+    font-family: 'Lato';
 `
 const Bottom = styled.div`
     display: flex;
+    margin-top: 19px;
     img{
         width: 39px;
         height: 39px;

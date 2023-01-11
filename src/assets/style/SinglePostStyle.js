@@ -20,8 +20,8 @@ export const Post = styled.div`
 	margin-bottom: 44px;
 	border-radius: 16px;
 	padding-bottom: 25px;
+	height: ${(props) => (props.openComments ? "" : "240px")};
 `
-
 export const Column = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -32,7 +32,8 @@ export const Column = styled.div`
 		height: 50px;
 		border-radius: 50%;
 		object-fit: cover;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
+		cursor: pointer;
 	}
 	svg {
 		font-size: 20px;
