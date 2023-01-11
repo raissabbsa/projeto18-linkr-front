@@ -53,7 +53,7 @@ export default function UserPage() {
 				setUpdate(update + 1);
 			})
 			.catch((error) => {
-				console.log(error);
+				alert("Error, try again");
 				setDisabled(false);
 			});
 	}
@@ -69,7 +69,7 @@ export default function UserPage() {
 				setUpdate(update + 1);
 			})
 			.catch((error) => {
-				console.log(error);
+				alert("Error, try again");
 				setDisabled(false);
 			});
 	}

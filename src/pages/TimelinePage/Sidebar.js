@@ -26,7 +26,7 @@ export default function Sidebar() {
 				setHashtags(trending);
 			})
 			.catch((err) => {
-				console.log(err.res.data);
+				console.log(err);
 			});
 	});
 
