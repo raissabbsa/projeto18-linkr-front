@@ -17,6 +17,18 @@ export function register(registerForm) {
 }
 
 export function searchUsers(name) {
-	const promise = axios.get(`${BASE_URL}/users/search?name=${name}`);
+	const promise = axios.get(`${BASE_URL}/user/search?name=${name}`);
+	return promise;
+}
+
+export function follow(userId, token) {
+	const config = createConfig(token);
+	const promise = axios.get(`${BASE_URL}/user/${userId}/follow`, config);
+	return promise;
+}
+
+export function unfollow(userId, token) {
+	const config = createConfig(token);
+	const promise = axios.get(`${BASE_URL}/user/${userId}/unfollow`, config);
 	return promise;
 }
