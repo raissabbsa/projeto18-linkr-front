@@ -144,7 +144,7 @@ export default function SinglePost({ post, update, setUpdate }) {
       promise.catch((err) => {
         console.log(err);
       });
-    }else{      
+    }else{
       const promise = axios.post(`${BASE_URL}/like`, form, config);
       promise.then((res) => {
         setLike(true);
@@ -170,7 +170,7 @@ export default function SinglePost({ post, update, setUpdate }) {
   return (
     <PostContainer>
       <Column>
-        <img src={post.picture_user} alt="img" />
+        <img src={post.picture_user} alt="img" onClick={() => navigate(`/user/${post.user_id}`)}/>
         <div onClick={sendLike}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
         <p>{post.likes} likes</p>
       </Column>

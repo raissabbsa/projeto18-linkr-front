@@ -26,6 +26,7 @@ export const Column = styled.div`
 		border-radius: 50%;
 		object-fit: cover;
 		margin-bottom: 20px;
+		cursor: pointer;
 	}
 	svg {
 		font-size: 20px;
