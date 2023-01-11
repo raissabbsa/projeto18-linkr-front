@@ -136,20 +136,26 @@ export default function SinglePost({ post, update, setUpdate }) {
 			postId: post.id,
 		};
 
-		if (like) {
-			setLike(false);
-		} else {
-			setLike(true);
-		}
+    if(like){
+      const promise = axios.delete(`${BASE_URL}/dislike/${post.id}`, config);
+      promise.then((res) => {
+        setLike(false);
+      });
+      promise.catch((err) => {
+        console.log(err);
+      });
+    }else{      
+      const promise = axios.post(`${BASE_URL}/like`, form, config);
+      promise.then((res) => {
+        setLike(true);
+      });
+      promise.catch((err) => {
+        console.log(err);
+      });
+    }
+  }
 
-		const promise = axios.post(`${BASE_URL}/like`, form, config);
-		promise.then((res) => {});
-		promise.catch((err) => {
-			console.log(err);
-		});
-	}
-
-	function verifyHashtag(text) {
+  function verifyHashtag(text) {
 		let array = text.split(" ");
 		let hashtags = [];
 		array.map((item) => {
@@ -161,14 +167,14 @@ export default function SinglePost({ post, update, setUpdate }) {
 		return hashtags;
 	}
 
-	return (
-		<PostContainer>
-			<Column>
-				<img src={post.picture_user} alt="img" />
-				<div onClick={() => sendLike()}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
-				<p>{post.likes} likes</p>
-			</Column>
-			<Content>
+  return (
+    <PostContainer>
+      <Column>
+        <img src={post.picture_user} alt="img" />
+        <div onClick={sendLike}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
+        <p>{post.likes} likes</p>
+      </Column>
+      <Content>
 				{handlePost()}
 				{handleDescription()}
 
