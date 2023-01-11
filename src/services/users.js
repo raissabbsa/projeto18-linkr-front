@@ -16,8 +16,9 @@ export function register(registerForm) {
 	return promise;
 }
 
-export function searchUsers(name) {
-	const promise = axios.get(`${BASE_URL}/user/search?name=${name}`);
+export function searchUsers(name, token) {
+	const config = createConfig(token);
+	const promise = axios.get(`${BASE_URL}/user/search?name=${name}`, config);
 	return promise;
 }
 

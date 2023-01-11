@@ -25,7 +25,7 @@ export default function NavBar() {
 
 	async function handleSearch() {
 		try {
-			const response = await api.searchUsers(search);
+			const response = await api.searchUsers(search, userData.token);
 			setResults(response.data);
 		} catch (err) {
 			console.log(err);
@@ -37,6 +37,11 @@ export default function NavBar() {
 		if (search.length > 3) {
 			setShowResults(true);
 		}
+	}
+
+	function closeSearch() {
+		setShowResults(false);
+		setResults([]);
 	}
 
 	useEffect(() => {
@@ -69,7 +74,7 @@ export default function NavBar() {
 							<UserSearched user={user} key={user.id} />
 						))}
 					</ResultsContainer>
-					<CloseResultContainer showResults={showResults} onClick={() => setShowResults(false)} />
+					<CloseResultContainer showResults={showResults} onClick={closeSearch} />
 				</SearchBarContainer>
 				<UserOptionsContainer userOptions={userOptions}>
 					<FaChevronDown onClick={() => setUserOptions(!userOptions)} />
@@ -98,7 +103,7 @@ export default function NavBar() {
 						<UserSearched user={user} key={user.id} />
 					))}
 				</ResultsContainer>
-				<CloseResultContainer showResults={showResults} onClick={() => setShowResults(false)} />
+				<CloseResultContainer showResults={showResults} onClick={closeSearch} />
 			</BottomSearchBar>
 		</>
 	);
