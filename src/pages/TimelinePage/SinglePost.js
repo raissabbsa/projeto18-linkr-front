@@ -1,5 +1,11 @@
 import Swal from "sweetalert2";
-import { FaPencilAlt, FaRegHeart, FaHeart, FaTrash, FaComments} from "react-icons/fa";
+import {
+  FaPencilAlt,
+  FaRegHeart,
+  FaHeart,
+  FaTrash,
+  FaComments,
+} from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
 import { UserContext } from "../../providers/UserData";
@@ -7,7 +13,17 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
 import api from "../../services/api";
-import { Column, PostContainer, Content, tagStyle, Top, LinkContainer, LinkInfo, mentionStyle, Form, Post
+import {
+  Column,
+  PostContainer,
+  Content,
+  tagStyle,
+  Top,
+  LinkContainer,
+  LinkInfo,
+  mentionStyle,
+  Form,
+  Post,
 } from "../../assets/style/SinglePostStyle";
 import Comments from "./Comments";
 
@@ -57,16 +73,16 @@ export default function SinglePost({ post, update, setUpdate }) {
   }
 
   function verifyHashtag(text) {
-	let array = text.split(" ");
-	let hashtags = [];
-	array.map((item) => {
-		if (item[0] === "#") {
-			hashtags.push(item.substr(1));
-		}
-		return "";
-	});
-	return hashtags;
-}
+    let array = text.split(" ");
+    let hashtags = [];
+    array.map((item) => {
+      if (item[0] === "#") {
+        hashtags.push(item.substr(1));
+      }
+      return "";
+    });
+    return hashtags;
+  }
 
   function editPost() {
     if (edit) {
@@ -111,48 +127,65 @@ export default function SinglePost({ post, update, setUpdate }) {
         console.log(err);
         setLoading(false);
         alert("Unable to save changes");
+      });
+    }
+  }
 
-		});
-	  }
-	}
+  function handlePost() {
+    if (userData.id === post.user_id) {
+      return (
+        <Top>
+          <h1 onClick={() => navigate(`/user/${post.user_id}`)}>
+            {post.username}
+          </h1>
+          <div>
+            <FaPencilAlt onClick={editPost} />
+            <FaTrash onClick={deletePost} />
+          </div>
+        </Top>
+      );
+    } else
+      return (
+        <h1 onClick={() => navigate(`/user/${post.user_id}`)}>
+          {post.username}
+        </h1>
+      );
+  }
 
-	function handlePost() {
-		if (userData.id === post.user_id) {
-			return (
-				<Top>
-					<h1 onClick={() => navigate(`/user/${post.user_id}`)}>{post.username}</h1>
-					<div>
-						<FaPencilAlt onClick={editPost} />
-						<FaTrash onClick={deletePost} />
-					</div>
-				</Top>
-			);
-		} else return <h1 onClick={() => navigate(`/user/${post.user_id}`)}>{post.username}</h1>;
-	}
+  function handleDescription() {
+    if (edit) {
+      return (
+        <Form onSubmit={sendEdition}>
+          <input
+            name="description"
+            value={newDescription}
+            type="text"
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={loading ? "disabled" : ""}
+            autoFocus
+          />
+        </Form>
+      );
+    } else {
+      return (
+        <ReactTagify
+          tagStyle={tagStyle}
+          mentionStyle={mentionStyle}
+          tagClicked={(tag) => navigate(`/hashtag/${tag.substring(1)}`)}
+        >
+          {post.description !== null && <p>{post.description}</p>}
+        </ReactTagify>
+      );
+    }
+  }
 
-	function handleDescription() {
-		if (edit) {
-			return (
-				<Form onSubmit={sendEdition}>
-					<input name="description" value={newDescription} type="text" onChange={(e) => setDescription(e.target.value)} disabled={loading ? "disabled" : ""} autoFocus />
-				</Form>
-			);
-		} else {
-			return (
-				<ReactTagify tagStyle={tagStyle} mentionStyle={mentionStyle} tagClicked={(tag) => navigate(`/hashtag/${tag.substring(1)}`)}>
-					{post.description !== null && <p>{post.description}</p>}
-				</ReactTagify>
-			);
-		}
-	}
+  function sendLike() {
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const form = {
+      postId: post.id,
+    };
 
-	function sendLike() {
-		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
-		const form = {
-			postId: post.id,
-		};
-
-    if(like){
+    if (like) {
       const promise = axios.delete(`${BASE_URL}/dislike/${post.id}`, config);
       promise.then((res) => {
         setLike(false);
@@ -160,7 +193,7 @@ export default function SinglePost({ post, update, setUpdate }) {
       promise.catch((err) => {
         console.log(err);
       });
-    }else{
+    } else {
       const promise = axios.post(`${BASE_URL}/like`, form, config);
       promise.then((res) => {
         setLike(true);
@@ -170,29 +203,33 @@ export default function SinglePost({ post, update, setUpdate }) {
       });
     }
   }
-  function decideComments(){
-	if(openComments){
-		setOpenComments(false);
-	}
-	else{
-		setOpenComments(true);
-	}
+  function decideComments() {
+    if (openComments) {
+      setOpenComments(false);
+    } else {
+      setOpenComments(true);
+    }
   }
-  function showComments(){
-	if(openComments){
-		return(<Comments post={post} update={update} setUpdate={setUpdate}/>)
-	}
-	
+  function showComments() {
+    if (openComments) {
+      return <Comments post={post} update={update} setUpdate={setUpdate} />;
+    }
   }
-
+  //console.log(post.comments);
   return (
     <Post openComments={openComments}>
       <PostContainer>
         <Column>
-		<img src={post.picture_user} alt="img" onClick={() => navigate(`/user/${post.user_id}`)}/>
-        <div onClick={sendLike}>{like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}</div>
+          <img
+            src={post.picture_user}
+            alt="img"
+            onClick={() => navigate(`/user/${post.user_id}`)}
+          />
+          <div onClick={sendLike}>
+            {like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}
+          </div>
           <p>{post.likes} likes</p>
-          <FaComments onClick={decideComments}/>
+          <FaComments onClick={decideComments} />
           <p>{post.comments.length} comments</p>
         </Column>
         <Content>
@@ -209,9 +246,7 @@ export default function SinglePost({ post, update, setUpdate }) {
           </LinkContainer>
         </Content>
       </PostContainer>
-	  {showComments()}
+      {showComments()}
     </Post>
   );
 }
-
-
