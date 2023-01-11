@@ -2,9 +2,7 @@ import styled from "styled-components";
 
 export const PostContainer = styled.div`
 	display: flex;
-	gap: 20px;
 	width: 611px;
-	height: 276px;
 	padding: 20px;
 	background-color: #171717;
 	border-radius: 16px;
@@ -15,26 +13,37 @@ export const PostContainer = styled.div`
 	}
 `;
 
+export const Post = styled.div`
+	display: flex;
+	flex-direction: column;
+	background-color: #1E1E1E;
+	margin-bottom: 44px;
+	border-radius: 16px;
+	padding-bottom: 25px;
+`
+
 export const Column = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 70px;
+	width: 80px;
 	& > img {
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
 		object-fit: cover;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 	svg {
 		font-size: 20px;
 		color: white;
-		margin-bottom: 8px;
+		margin-bottom: 5px;
+		margin-top: 10px;
 	}
+
 	p {
 		color: white;
-		font-size: 12px;
+		font-size: 11px;
 	}
 	@media (max-width: 611px) {
 		width: 20%;
@@ -57,6 +66,7 @@ export const Content = styled.div`
 		font-size: 20px;
 		line-height: 20px;
 		color: #b7b7b7;
+		margin-bottom: 10px;
 	}
 	h1 {
 		color: white;
@@ -87,11 +97,13 @@ export const Top = styled.div`
 	justify-content: space-between;
 	div {
 		display: flex;
-		gap: 15px;
+		margin-bottom: 15px;
 	}
 	svg {
 		color: white;
 		font-size: 15px;
+		margin-left: 10px;
+
 	}
 	@media (max-width: 611px) {
 		width: 100%;
@@ -172,3 +184,5 @@ export const Form = styled.form`
 		}
 	}
 `;
+
+
