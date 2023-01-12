@@ -10,6 +10,7 @@ export default function TimelineUpdates({ update, setUpdate }) {
 	const { userData } = useContext(UserContext);
     const countUpdates = useRef(0);
     const postsRef = useRef([{id: 0}]);
+    const startRef = useRef(true);
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
@@ -30,8 +31,10 @@ export default function TimelineUpdates({ update, setUpdate }) {
                         if(post.id > value.id)
                             count++;
                     });
-                    if(count === postsRef.current.length)
+                    if(count === postsRef.current.length && postsRef.current.length > 1){
                         countUpdates.current++;
+                        console.log(countUpdates.current);
+                    }
                 });
                 postsRef.current = res.data;
             }
@@ -72,7 +75,8 @@ const UpdatesBox = styled.div`
     align-items: center;
     margin-top: 10px;
     margin-bottom: 17px;
-    p{
+    cursor: pointer;
+    p {
         font-family: 'Lato';
         font-style: normal;
         font-weight: 400;
