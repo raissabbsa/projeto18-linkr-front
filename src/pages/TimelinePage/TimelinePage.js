@@ -20,7 +20,7 @@ export default function TimelinePage() {
 					    banco mesmo */}
 					<Posts update={update} setUpdate={setUpdate} />
 				</TimelineContainer>
-				<Sidebar update={update}/>
+				<Sidebar update={update} setUpdate={setUpdate}/>
 			</BodyContent>
 		</>
 	);
