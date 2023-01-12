@@ -2,38 +2,41 @@ import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useInterval from 'use-interval';
-import { PostsContainer } from "../../assets/style/PostsStyle";
 import { BASE_URL } from "../../constants/urls";
 import { UserContext } from "../../providers/UserData";
-import { handlePosts } from "./Posts";
 
-export default function TimelineUpdates({ update, setUpdate/* , posts */ }) {
+export default function TimelineUpdates({ update, setUpdate }) {
     const [checkingUpdates, setCheckingUpdates] = useState(false);
 	const { userData } = useContext(UserContext);
-    const [count, setCount] = useState(0); //o contador com a quantidade tem que ser fora do useEffect e atualizado para "0" dentro do onClick.
-    const updatesQuantity = useRef(0);
-    const postsSize = useRef(0);
-    //Se o userLogado for igual ao dono do post, essa renderização não deve valer.
-    //Deve dar um return ou algo assim, não sei ainda.
-    //Na verdade, é só colocar o useInterval para começar a contar assim que entra no componente (eu acho)
+    const countUpdates = useRef(0);
+    const postsRef = useRef([{id: 0}]);
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 		const promise = axios.get(`${BASE_URL}/posts`, config);
+
 		promise.then((res) => {
             const isTheOwner = (res.data[0].username === userData.username);
-            console.log('renderizou');
-            if(res.data.length > postsSize.current && isTheOwner){
-                postsSize.current = res.data.length;
-            } else if(res.data.length > postsSize.current && !isTheOwner){
-                console.log(updatesQuantity.current);
-                    updatesQuantity.current += res.data.length - postsSize.current;
-                console.log(updatesQuantity.current);
-                console.log(postsSize.current);
-                    postsSize.current = res.data.length; //nunca é zerado, permanece com o tamanho do array anterior para a comparação
-                console.log(postsSize.current);
+            const isThereUpdates = (res.data[0].id > postsRef.current[0].id);
+
+            if(isThereUpdates && isTheOwner) {
+                postsRef.current = res.data;
             }
-		});
+            else if(isThereUpdates && !isTheOwner) {
+                let count = 0;
+                res.data.forEach( (post) => {
+                    postsRef.current.forEach( value => {
+                        if(post.id > value.id)
+                            count++;
+                    });
+                    if(count===postsRef.current.length)
+                        countUpdates.current++;
+                });
+
+                postsRef.current = res.data;
+            }
+
+        });
 		promise.catch((err) => {
 			alert("An error occured while trying to fetch the updates, please refresh the page");
 			console.log(err);
@@ -42,18 +45,17 @@ export default function TimelineUpdates({ update, setUpdate/* , posts */ }) {
 
     useInterval(() => {
         setCheckingUpdates(!checkingUpdates);
-        console.log('começou a contar');
     }, 8000);
 
     function showUpdates(){
         setUpdate(update => update+1); 
-        updatesQuantity.current = 0;
+        countUpdates.current = 0;
     }
 
     return ( 
         <>
-            <UpdatesBox display={ (updatesQuantity.current > 0) ? 'flex' : 'none'} onClick={ showUpdates }>
-                <p>{updatesQuantity.current} new posts, load more!</p>
+            <UpdatesBox display={ (countUpdates.current > 0) ? 'flex' : 'none' } onClick={ showUpdates }>
+                <p>{countUpdates.current} new posts, load more!</p>
             </UpdatesBox>
         </>
     );

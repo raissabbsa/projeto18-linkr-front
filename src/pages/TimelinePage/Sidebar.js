@@ -24,7 +24,6 @@ export default function Sidebar({ update, setUpdate }) {
 			.then((res) => {
 				const trending = res.data;
 				setHashtags(trending);
-				console.log(hashtags);
 			})
 			.catch((err) => {
 				console.log(err);
