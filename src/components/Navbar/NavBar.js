@@ -10,7 +10,7 @@ import api from "../../services/api";
 import UserSearched from "./UserSearched";
 
 export default function NavBar() {
-	const { userData, setUserData, userOptions, setUserOptions } = useContext(UserContext);
+	const { userData, setUserData, userOptions, setUserOptions, followers, setFollowers } = useContext(UserContext);
 	const [search, setSearch] = useState("");
 	const [showResults, setShowResults] = useState(false);
 	const [results, setResults] = useState([]);
@@ -45,6 +45,15 @@ export default function NavBar() {
 	}
 
 	useEffect(() => {
+		api
+			.getFollowers(userData.token)
+			.then((res) => {
+				const arrObj = res.data
+				setFollowers(arrObj.map(obj => obj.id))
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		if (search !== "") {
 			setShowResults(true);
 			handleSearch();
@@ -59,19 +68,12 @@ export default function NavBar() {
 				<StyledLink to="/timeline">linkr</StyledLink>
 				<SearchBarContainer>
 					<SearchContainer>
-            <DebounceInput
-              onClick={searchExist}
-              placeholder="Search for people"
-              minLength={3}
-              debounceTimeout={300}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+						<DebounceInput onClick={searchExist} placeholder="Search for people" minLength={3} debounceTimeout={300} value={search} onChange={(e) => setSearch(e.target.value)} />
 						<BiSearchAlt2 onClick={handleSearch} />
 					</SearchContainer>
 					<ResultsContainer showResults={showResults}>
 						{results.map((user) => (
-							<UserSearched user={user} key={user.id} />
+							<UserSearched user={user} key={user.id} followers={followers}/>
 						))}
 					</ResultsContainer>
 					<CloseResultContainer showResults={showResults} onClick={closeSearch} />
@@ -88,19 +90,12 @@ export default function NavBar() {
 			</NavContainer>
 			<BottomSearchBar>
 				<SearchContainer>
-          <DebounceInput
-            onClick={searchExist}
-            placeholder="Search for people"
-            minLength={3}
-            debounceTimeout={300}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+					<DebounceInput onClick={searchExist} placeholder="Search for people" minLength={3} debounceTimeout={300} value={search} onChange={(e) => setSearch(e.target.value)} />
 					<BiSearchAlt2 onClick={handleSearch} />
 				</SearchContainer>
 				<ResultsContainer showResults={showResults}>
 					{results.map((user) => (
-						<UserSearched user={user} key={user.id} />
+						<UserSearched user={user} key={user.id} followers={followers}/>
 					))}
 				</ResultsContainer>
 				<CloseResultContainer showResults={showResults} onClick={closeSearch} />

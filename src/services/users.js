@@ -33,3 +33,9 @@ export function unfollow(userId, token) {
 	const promise = axios.get(`${BASE_URL}/user/${userId}/unfollow`, config);
 	return promise;
 }
+
+export function getFollowers(token) {
+	const config = createConfig(token);
+	const promise = axios.get(`${BASE_URL}/followers`, config);
+	return promise
+}
