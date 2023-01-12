@@ -1,10 +1,19 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../providers/UserData";
 
 export default function LoadComments({ comment, post }) {
+	const { followers } = useContext(UserContext);
+  const isFollower = followers.find(id => id = comment.user_id);
+  
   function loadname() {
     if (comment.username_comment === post.username) {
       return "• post's author";
     }
+    else if(isFollower !== undefined){
+      return "• following";
+    }
+    
   }
   return (
     <CommentContainer>
