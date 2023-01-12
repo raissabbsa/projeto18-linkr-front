@@ -7,5 +7,7 @@ export const UserProvider = ({ children }) => {
 
 	const [userOptions, setUserOptions] = useState(false);
 
-	return <UserContext.Provider value={{ userData, setUserData, userOptions, setUserOptions }}>{children}</UserContext.Provider>;
+	const [followers, setFollowers] = useState([]);
+
+	return <UserContext.Provider value={{ userData, setUserData, userOptions, setUserOptions, followers, setFollowers }}>{children}</UserContext.Provider>;
 };

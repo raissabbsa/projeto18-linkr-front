@@ -1,4 +1,4 @@
-import { createConfig, login, register, searchUsers, follow, unfollow } from "./users";
+import { createConfig, login, register, searchUsers, follow, unfollow, getFollowers } from "./users";
 
 const api = {
 	createConfig,
@@ -6,7 +6,8 @@ const api = {
 	register,
 	searchUsers,
 	follow,
-	unfollow
+	unfollow,
+	getFollowers
 };
 
 export default api;
