@@ -21,6 +21,7 @@ export default function TimelineUpdates({ update, setUpdate }) {
 
             if(isThereUpdates && isTheOwner) {
                 postsRef.current = res.data;
+                countUpdates.current = 0;
             }
             else if(isThereUpdates && !isTheOwner) {
                 let count = 0;
@@ -29,10 +30,9 @@ export default function TimelineUpdates({ update, setUpdate }) {
                         if(post.id > value.id)
                             count++;
                     });
-                    if(count===postsRef.current.length)
+                    if(count === postsRef.current.length)
                         countUpdates.current++;
                 });
-
                 postsRef.current = res.data;
             }
 
