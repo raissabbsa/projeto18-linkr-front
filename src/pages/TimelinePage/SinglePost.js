@@ -1,10 +1,5 @@
 import Swal from "sweetalert2";
-import {
-  FaPencilAlt,
-  FaRegHeart,
-  FaHeart,
-  FaTrash,
-  FaComments,
+import { FaPencilAlt, FaRegHeart, FaHeart, FaTrash, FaComments,
 } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
@@ -13,17 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants/urls";
 import axios from "axios";
 import api from "../../services/api";
-import {
-  Column,
-  PostContainer,
-  Content,
-  tagStyle,
-  Top,
-  LinkContainer,
-  LinkInfo,
-  mentionStyle,
-  Form,
-  Post,
+import { Column, PostContainer, Content, tagStyle, Top, LinkContainer, LinkInfo, mentionStyle, Form, Post,
 } from "../../assets/style/SinglePostStyle";
 import Comments from "./Comments";
 
