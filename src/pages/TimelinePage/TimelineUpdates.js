@@ -45,7 +45,7 @@ export default function TimelineUpdates({ update, setUpdate }) {
 
     useInterval(() => {
         setCheckingUpdates(!checkingUpdates);
-    }, 8000);
+    }, 15000);
 
     function showUpdates(){
         setUpdate(update => update+1); 
