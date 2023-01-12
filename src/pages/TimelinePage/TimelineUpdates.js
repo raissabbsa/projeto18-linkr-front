@@ -15,18 +15,22 @@ export default function TimelineUpdates({ update, setUpdate/* , posts */ }) {
     const postsSize = useRef(0);
     //Se o userLogado for igual ao dono do post, essa renderização não deve valer.
     //Deve dar um return ou algo assim, não sei ainda.
+    //Na verdade, é só colocar o useInterval para começar a contar assim que entra no componente (eu acho)
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 		const promise = axios.get(`${BASE_URL}/posts`, config);
 		promise.then((res) => {
+            const isTheOwner = (res.data[0].username === userData.username);
             console.log('renderizou');
-            if(res.data.length > postsSize.current){
+            if(res.data.length > postsSize.current && isTheOwner){
+                postsSize.current = res.data.length;
+            } else if(res.data.length > postsSize.current && !isTheOwner){
                 console.log(updatesQuantity.current);
-                updatesQuantity.current += res.data.length - postsSize.current;
+                    updatesQuantity.current += res.data.length - postsSize.current;
                 console.log(updatesQuantity.current);
                 console.log(postsSize.current);
-                postsSize.current = res.data.length; //nunca é zerado, permanece com o tamanho do array anterior para a comparação
+                    postsSize.current = res.data.length; //nunca é zerado, permanece com o tamanho do array anterior para a comparação
                 console.log(postsSize.current);
             }
 		});
@@ -38,12 +42,11 @@ export default function TimelineUpdates({ update, setUpdate/* , posts */ }) {
 
     useInterval(() => {
         setCheckingUpdates(!checkingUpdates);
+        console.log('começou a contar');
     }, 8000);
 
     function showUpdates(){
-        //setCount(count => count-count);
         setUpdate(update => update+1); 
-        //console.log(count);
         updatesQuantity.current = 0;
     }
 
