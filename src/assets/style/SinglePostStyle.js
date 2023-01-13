@@ -32,14 +32,13 @@ export const Column = styled.div`
 		height: 50px;
 		border-radius: 50%;
 		object-fit: cover;
-		margin-bottom: 20px;
 		cursor: pointer;
 	}
 	svg {
-		font-size: 20px;
+		font-size: 18px;
 		color: white;
 		margin-bottom: 5px;
-		margin-top: 10px;
+		margin-top: 15px;
 	}
 
 	p {
