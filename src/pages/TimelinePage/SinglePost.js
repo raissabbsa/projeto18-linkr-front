@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { FaPencilAlt, FaRegHeart, FaHeart, FaTrash, FaComments,
+import { FaPencilAlt, FaRegHeart, FaHeart, FaTrash, FaComments, FaRetweet
 } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { ReactTagify } from "react-tagify";
@@ -11,6 +11,7 @@ import api from "../../services/api";
 import { Column, PostContainer, Content, tagStyle, Top, LinkContainer, LinkInfo, mentionStyle, Form, Post,
 } from "../../assets/style/SinglePostStyle";
 import Comments from "./Comments";
+import Repost from "./Repost";
 
 export default function SinglePost({ post, update, setUpdate }) {
   const { userData } = useContext(UserContext);
@@ -19,6 +20,7 @@ export default function SinglePost({ post, update, setUpdate }) {
   const [loading, setLoading] = useState(false);
   const [like, setLike] = useState(false);
   const [openComments, setOpenComments] = useState(false);
+  const [repost, setRepost] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -200,9 +202,10 @@ export default function SinglePost({ post, update, setUpdate }) {
       return <Comments post={post} update={update} setUpdate={setUpdate} />;
     }
   }
-  //console.log(post.comments);
+
   return (
-    <Post openComments={openComments}>
+    <Post openComments={openComments} >
+	<Repost repost={repost} setRepost={setRepost} post={post} update={update} setUpdate={setUpdate}/>
       <PostContainer>
         <Column>
           <img
@@ -216,6 +219,8 @@ export default function SinglePost({ post, update, setUpdate }) {
           <p>{post.likes} likes</p>
           <FaComments onClick={decideComments} />
           <p>{post.comments.length} comments</p>
+		  <FaRetweet onClick={() => setRepost(true)}/>
+		  <p>{post.reposts} re-posts</p>
         </Column>
         <Content>
           {handlePost()}

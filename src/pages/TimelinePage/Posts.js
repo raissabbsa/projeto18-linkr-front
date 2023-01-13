@@ -32,7 +32,7 @@ export function handlePosts(posts, update, setUpdate, finished) {
 export default function Posts({ update, setUpdate }) {
 	const [posts, setPosts] = useState([]);
 	const [finished, setFinished] = useState(false);
-	const { userData } = useContext(UserContext);
+	const { userData, followers } = useContext(UserContext);
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
@@ -47,7 +47,21 @@ export default function Posts({ update, setUpdate }) {
 		});
 	}, [update, userData.token]);
 
-	return (
-		<PostsContainer>{handlePosts(posts, update, setUpdate, finished)}</PostsContainer>
-	);
+	if (followers.length === 0) {
+		return (
+			<PostsContainer>
+				<p>You don't follow anyone yet. Search for new friends!</p>
+			</PostsContainer>
+		);
+	}
+
+	if (posts.length === 0) {
+		return (
+			<PostsContainer>
+				<p>No posts found from your friends</p>
+			</PostsContainer>
+		);
+	}
+
+	return <PostsContainer>{handlePosts(posts, update, setUpdate, finished)}</PostsContainer>;
 }
