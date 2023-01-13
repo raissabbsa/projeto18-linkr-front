@@ -5,6 +5,7 @@ import { BASE_URL } from "../../constants/urls";
 import { UserContext } from "../../providers/UserData";
 import SinglePost from "./SinglePost";
 import { PostsContainer, Loader } from "../../assets/style/PostsStyle.js";
+import TimelineUpdates from "./TimelineUpdates";
 
 export function handlePosts(posts, update, setUpdate, finished) {
 	if (finished && posts.length > 0) {
@@ -47,5 +48,7 @@ export default function Posts({ update, setUpdate }) {
 		});
 	}, [update, userData.token]);
 
-	return <PostsContainer>{handlePosts(posts, update, setUpdate, finished)}</PostsContainer>;
+	return (
+		<PostsContainer>{handlePosts(posts, update, setUpdate, finished)}</PostsContainer>
+	);
 }
