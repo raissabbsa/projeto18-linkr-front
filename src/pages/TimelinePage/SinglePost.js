@@ -12,16 +12,23 @@ import { Column, PostContainer, Content, tagStyle, Top, LinkContainer, LinkInfo,
 } from "../../assets/style/SinglePostStyle";
 import Comments from "./Comments";
 import Repost from "./Repost";
+import { Tooltip } from "react-tooltip";
 
 export default function SinglePost({ post, update, setUpdate }) {
   const { userData } = useContext(UserContext);
   const [edit, setEdit] = useState(false);
   const [newDescription, setDescription] = useState(post.description);
   const [loading, setLoading] = useState(false);
-  const [like, setLike] = useState(false);
   const [openComments, setOpenComments] = useState(false);
   const [repost, setRepost] = useState(false);
   const navigate = useNavigate();
+  let postId = post.id || 1;
+  const [infoText, setInfoText] = useState("ninguém curtiu este post");
+  const [likesInfo, setLikesInfo] = useState({
+    likesUsers: [{ username: "Você" }, { username: "Fulano" }],
+    liked: false,
+    likes: 0,
+  });
 
   useEffect(() => {
     document.addEventListener("keydown", detectKeydown, true);
@@ -165,31 +172,61 @@ export default function SinglePost({ post, update, setUpdate }) {
       );
     }
   }
-
-  function sendLike() {
+  
+  function likePost() {
+    let newURL = BASE_URL;
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
-    const form = {
-      postId: post.id,
-    };
-
-    if (like) {
-      const promise = axios.delete(`${BASE_URL}/dislike/${post.id}`, config);
-      promise.then((res) => {
-        setLike(false);
-      });
-      promise.catch((err) => {
-        console.log(err);
-      });
-    }else{
-      const promise = axios.post(`${BASE_URL}/like`, form, config);
-      promise.then((res) => {
-        setLike(true);
-      });
-      promise.catch((err) => {
-        console.log(err);
-      });
+    if (!likesInfo.liked) {
+      newURL = URL + "/like/" + postId;
+    } else {
+      newURL = URL + "/dislike/" + postId;
     }
+    setLikesInfo({ ...likesInfo, liked: !likesInfo.liked });
+    axios
+      .post(newURL, {}, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e));
   }
+
+  useEffect(() => {
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+
+    axios
+      .get(`${URL}/likes/${postId}`, config)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          const info = res.data;
+          setLikesInfo(info);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      // eslint-disable-next-line
+  }, [likesInfo.liked]);
+
+  useEffect(() => {
+    if (likesInfo.likes === 0) {
+      setInfoText("Ninguém curtiu este post");
+    } else if (likesInfo.likes === 1) {
+      setInfoText(likesInfo.likesUsers[0]?.username + " curtiu este post");
+    } else if (likesInfo.likes === 2) {
+      setInfoText(
+        `${likesInfo.likesUsers[0]?.username} e ${likesInfo.likesUsers[1]?.username} curtiram este post`
+      );
+    } else if (likesInfo.likes > 2) {
+      setInfoText(
+        `${likesInfo.likesUsers[0]?.username}, ${
+          likesInfo.likesUsers[1]?.username
+        } e outras ${likesInfo.likes * 1 - 2} pessoas`
+      );
+    }
+    // eslint-disable-next-line
+  }, [likesInfo.likesUsers]);
+
   function decideComments() {
     if (openComments) {
       setOpenComments(false);
@@ -213,10 +250,14 @@ export default function SinglePost({ post, update, setUpdate }) {
             alt="img"
             onClick={() => navigate(`/user/${post.user_id}`)}
           />
-          <div onClick={sendLike}>
-            {like === true ? <FaHeart color="#AC0000" /> : <FaRegHeart />}
+          <div onClick={likePost} liked={likesInfo.liked}>
+            {likesInfo.liked ? <FaHeart color="#AC0000" /> : <FaRegHeart />} 
           </div>
-          <p>{post.likes} likes</p>
+          <p id="likes-info">{likesInfo.likes} likes</p>
+          <Tooltip anchorId="likes-info"
+          data-tooltip-place="bottom"
+          data-tooltip-variant="light"
+          data-tooltip-content={infoText} />
           <FaComments onClick={decideComments} />
           <p>{post.comments.length} comments</p>
 		  <FaRetweet onClick={() => setRepost(true)}/>
