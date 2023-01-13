@@ -194,7 +194,7 @@ export default function SinglePost({ post, update, setUpdate }) {
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
     axios
-      .get(`${URL}/likes/${postId}`, config,)
+      .get(`${URL}/likes/${postId}`, config)
       .then((res) => {
         console.log(res.data);
         if (res.data) {
