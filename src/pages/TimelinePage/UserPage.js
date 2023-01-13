@@ -11,6 +11,7 @@ import { PostsContainer, Loader } from "../../assets/style/PostsStyle.js";
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
 import api from "../../services/api";
+import TimelineUpdates from "./TimelineUpdates";
 
 export default function UserPage() {
 	const [update, setUpdate] = useState(0);
@@ -103,6 +104,7 @@ export default function UserPage() {
 								</button>
 							)}
 						</TitlePageContent>
+						<TimelineUpdates update={update} setUpdate={setUpdate}/>
 						<PostsContainer>{handlePosts(items, update, setUpdate, finished)}</PostsContainer>
 					</TimelineContainer>
 					<Sidebar />

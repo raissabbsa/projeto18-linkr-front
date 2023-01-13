@@ -16,8 +16,6 @@ export default function TimelinePage() {
 					<h1>timeline</h1>
 					<Publishing setUpdate={setUpdate} update={update} />
 					<TimelineUpdates update={update} setUpdate={setUpdate}/>
-					{/* tenho que dar um jeito de pegar os posts, mas por enquanto vou pegar do
-					    banco mesmo */}
 					<Posts update={update} setUpdate={setUpdate} />
 				</TimelineContainer>
 				<Sidebar update={update} setUpdate={setUpdate}/>

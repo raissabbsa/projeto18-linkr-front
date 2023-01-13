@@ -10,55 +10,58 @@ export default function TimelineUpdates({ update, setUpdate }) {
 	const { userData } = useContext(UserContext);
     const countUpdates = useRef(0);
     const postsRef = useRef([{id: 0}]);
-    const startRef = useRef(true);
+	const [posts, setPosts] = useState([]);
+    const [showCounter, setShowCounter] = useState(countUpdates.current);
 
 	useEffect(() => {
 		const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 		const promise = axios.get(`${BASE_URL}/posts`, config);
-
 		promise.then((res) => {
+			setPosts(res.data);
+
             const isTheOwner = (res.data[0].username === userData.username);
             const isThereUpdates = (res.data[0].id > postsRef.current[0].id);
 
-            if(isThereUpdates && isTheOwner) {
+            if (isThereUpdates && isTheOwner) {
                 postsRef.current = res.data;
                 countUpdates.current = 0;
-            }
-            else if(isThereUpdates && !isTheOwner) {
+            } 
+            else if (isThereUpdates && !isTheOwner) {
                 let count = 0;
                 res.data.forEach( (post) => {
                     postsRef.current.forEach( value => {
                         if(post.id > value.id)
                             count++;
                     });
-                    if(count === postsRef.current.length && postsRef.current.length > 1){
+                    if(count === postsRef.current.length && postsRef.current[0].id !== 0)
                         countUpdates.current++;
-                        console.log(countUpdates.current);
-                    }
                 });
                 postsRef.current = res.data;
             }
-
         });
+        
 		promise.catch((err) => {
 			alert("An error occured while trying to fetch the updates, please refresh the page");
 			console.log(err);
 		});
-	}, [checkingUpdates, userData.token, update]);
+
+	}, [checkingUpdates, userData.token, update, posts]);
 
     useInterval(() => {
         setCheckingUpdates(!checkingUpdates);
+        setShowCounter(countUpdates.current);
     }, 15000);
 
     function showUpdates(){
         setUpdate(update => update+1); 
         countUpdates.current = 0;
+        setShowCounter(countUpdates.current);
     }
 
     return ( 
         <>
-            <UpdatesBox display={ (countUpdates.current > 0) ? 'flex' : 'none' } onClick={ showUpdates }>
-                <p>{countUpdates.current} new posts, load more!</p>
+            <UpdatesBox display={ (showCounter > 0) ? 'flex' : 'none' } onClick={ showUpdates }>
+                <p>{showCounter} new posts, load more!</p>
             </UpdatesBox>
         </>
     );
