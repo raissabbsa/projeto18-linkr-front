@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { handlePosts } from "./Posts";
 import { PostsContainer } from "../../assets/style/PostsStyle.js";
+import TimelineUpdates from "./TimelineUpdates";
 
 export default function HashtagPage() {
 	const [update, setUpdate] = useState(0);
@@ -34,6 +35,7 @@ export default function HashtagPage() {
 			<BodyContent>
 				<TimelineContainer>
 					<h1># {hashtag}</h1>
+					<TimelineUpdates update={update} setUpdate={setUpdate}/>
 					<PostsContainer>{handlePosts(items, update, setUpdate, finished)}</PostsContainer>
 				</TimelineContainer>
 				<Sidebar />
